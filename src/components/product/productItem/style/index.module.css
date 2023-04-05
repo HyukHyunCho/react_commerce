@@ -1,0 +1,37 @@
+.container {
+  padding: 0.5em;
+  margin: 0 auto;
+}
+
+.container:hover {
+  cursor: pointer;
+  transform: scale(1.02);
+  transition: transform 250ms ease-in;
+}
+
+.container.grid {
+  width: 22.5rem;
+}
+
+.container.list {
+  width: 100%;
+}
+
+.thumbnail {
+  width: 250px;
+  height: 250px;
+  box-shadow: 0 5px 18px -7px rgba(0, 0, 0, 1);
+}
+
+.productName {
+  margin: 0;
+  font-size: 1rem;
+  text-align: left;
+  font-weight: bold;
+}
+
+.productPrice {
+  margin: 0;
+  font-size: 0.8rem;
+  text-align: left;
+}
