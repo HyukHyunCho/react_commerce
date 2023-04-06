@@ -1,10 +1,9 @@
-import React from 'react';
-import SignForm from '../../components/signForm';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { useIdCheck, useSignUp } from '../../hooks/useAuth';
 import { useNavigate } from 'react-router';
+import Layout from '../../components/common/Layout';
 
 interface IFormValue {
   username: string;
@@ -50,7 +49,7 @@ export default function SignUpForm() {
   };
 
   return (
-    <SignForm title={'회원가입'}>
+    <Layout title={'회원가입'} size={400}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Controller
           name="username"
@@ -182,17 +181,16 @@ export default function SignUpForm() {
         <Button type="submit" color="primary" variant="contained" fullWidth>
           회원가입
         </Button>
+        <Button
+          color="primary"
+          variant="outlined"
+          sx={{ marginTop: '10px' }}
+          fullWidth
+          onClick={() => navigate('/signin')}
+        >
+          로그인 페이지로
+        </Button>
       </form>
-      <Button
-        type="submit"
-        color="primary"
-        variant="outlined"
-        fullWidth
-        sx={{ marginTop: '10px' }}
-        onClick={() => navigate('/signin')}
-      >
-        로그인 페이지로
-      </Button>
-    </SignForm>
+    </Layout>
   );
 }

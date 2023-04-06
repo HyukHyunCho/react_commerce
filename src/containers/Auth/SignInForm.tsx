@@ -5,7 +5,7 @@ import { useLogin } from '../../hooks/useAuth';
 import { useNavigate } from 'react-router';
 import { setTokenCookie } from '../../util/cookie';
 import { setUserTypeCookie } from '../../util/cookie';
-import SignForm from '../../components/signForm';
+import Layout from '../../components/common/Layout';
 
 interface IFormValue {
   username: string;
@@ -23,13 +23,14 @@ export default function SignInForm() {
       onSuccess: (res) => {
         setTokenCookie(res.token);
         setUserTypeCookie(res.user_type);
+        localStorage.setItem('access_token', res.token);
         navigate('/');
       },
     });
   };
 
   return (
-    <SignForm title={'로그인'}>
+    <Layout title={'로그인'} size={400}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Controller
           name="username"
@@ -109,17 +110,16 @@ export default function SignInForm() {
         <Button type="submit" color="primary" variant="contained" fullWidth>
           로그인
         </Button>
+        <Button
+          color="primary"
+          variant="outlined"
+          fullWidth
+          sx={{ marginTop: '10px' }}
+          onClick={() => navigate('/signup')}
+        >
+          회원가입
+        </Button>
       </form>
-      <Button
-        type="submit"
-        color="primary"
-        variant="outlined"
-        fullWidth
-        sx={{ marginTop: '10px' }}
-        onClick={() => navigate('/signup')}
-      >
-        회원가입
-      </Button>
-    </SignForm>
+    </Layout>
   );
 }
