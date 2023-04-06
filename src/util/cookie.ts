@@ -23,6 +23,10 @@ export const getCookie = (name: string) => {
   return cookies.get(name);
 };
 
+export const getUserType = () => {
+  return cookies.get('user_type');
+};
+
 export const removeCookie = () => {
   cookies.remove('access_token', { path: '/' });
   cookies.remove('user_type', { path: '/' });
