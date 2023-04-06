@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import ProductDetail from '../../components/product/productDetail';
 import { useProductDetail } from '../../hooks/useProductDetail';
-import { useAddCart, useCart } from '../../hooks/useCart';
+import { useCart, useCreateCart } from '../../hooks/useCart';
 import { getCookie } from '../../util/cookie';
 import Modal from '../../components/modal';
+import Layout from '../../components/common/Layout';
 
 interface ICartItem {
   cart_item_id: number;
@@ -15,16 +16,17 @@ interface ICartItem {
 }
 
 export default function ProductDetailForm() {
-  const { id } = useParams();
   const navigate = useNavigate();
+  const { id } = useParams();
   const [userType] = useState(getCookie('user_type'));
   const [open, setOpen] = useState<boolean>(false);
   const [modalTitle, setModalTitle] = useState('');
   const [modalSubTitle, setModalSubTitle] = useState('');
   const [count, setCount] = useState(1);
   const { data: productDetailData } = useProductDetail(Number(id));
+
   const { data: cartData } = useCart();
-  const { mutate } = useAddCart();
+  const { mutate } = useCreateCart();
 
   const handleClose = () => {
     setOpen(false);
@@ -76,7 +78,7 @@ export default function ProductDetailForm() {
   };
 
   return (
-    <>
+    <Layout title="상품 상세" size={1000}>
       <ProductDetail
         productDetailData={productDetailData}
         cartData={cartData}
@@ -92,6 +94,6 @@ export default function ProductDetailForm() {
           subTitle={modalSubTitle}
         />
       )}
-    </>
+    </Layout>
   );
 }
