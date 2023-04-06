@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import CartList from '../../components/cart/cartList/CartList';
-import { useCart, useCartQueries, useDeleteCart } from '../../hooks/useCart';
-import { Box, Container, CssBaseline, Typography } from '@mui/material';
+import { useCart, useDeleteCart } from '../../hooks/useCart';
 import { useNavigate } from 'react-router';
 import { Button } from '@mui/material';
+import Layout from '../../components/common/Layout';
 
 interface ICartItem {
   created_at: string;
@@ -22,14 +22,16 @@ interface ICartItem {
 
 export default function CartForm() {
   const navigate = useNavigate();
-  const { data: cartData } = useCart();
-  const cartQueries = useCartQueries();
+  const { data: cartData, cartQueries } = useCart();
   const { mutate } = useDeleteCart();
   const [cartCheckItems, setCartCheckItems] = useState<ICartItem[]>([]);
   const [cartItemTotalPrice, setCartItemTotalPrice] = useState(0);
   const [cartItemFee, setCartItemFee] = useState(0);
   const [cartItemPayPrice, setCartItemPayPrice] = useState(0);
   //const isSuccess = cartQueries.every((info) => info.status === 'success');
+
+  console.log(cartData);
+  console.log(cartQueries);
 
   const onClickOrder = () => {
     if (cartCheckItems.length === 0) {
@@ -132,41 +134,28 @@ export default function CartForm() {
   };
 
   return (
-    <Container component="main" maxWidth="lg">
-      <CssBaseline />
-      <Box
-        sx={{
-          marginTop: 8,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-        }}
+    <Layout title="장바구니" size={1000}>
+      {cartData && (
+        <CartList
+          cartData={cartData}
+          cartInfoData={cartQueries}
+          cartCheckItems={cartCheckItems}
+          cartItemTotalPrice={cartItemTotalPrice}
+          cartItemFee={cartItemFee}
+          cartItemPayPrice={cartItemPayPrice}
+          selectCart={selectCart}
+          selectAllCart={selectAllCart}
+          onClickCartDelete={onClickCartDelete}
+        />
+      )}
+      <Button
+        type="button"
+        variant="contained"
+        fullWidth
+        onClick={onClickOrder}
       >
-        <Typography component="h1" variant="h5">
-          장바구니
-        </Typography>
-        {cartData && (
-          <CartList
-            cartData={cartData}
-            cartInfoData={cartQueries}
-            cartCheckItems={cartCheckItems}
-            cartItemTotalPrice={cartItemTotalPrice}
-            cartItemFee={cartItemFee}
-            cartItemPayPrice={cartItemPayPrice}
-            selectCart={selectCart}
-            selectAllCart={selectAllCart}
-            onClickCartDelete={onClickCartDelete}
-          />
-        )}
-        <Button
-          type="button"
-          variant="contained"
-          fullWidth
-          onClick={onClickOrder}
-        >
-          주문하기
-        </Button>
-      </Box>
-    </Container>
+        주문하기
+      </Button>
+    </Layout>
   );
 }
