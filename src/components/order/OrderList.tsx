@@ -4,6 +4,7 @@ import {
   TableRow,
   TableBody,
   TableCell,
+  Typography,
 } from '@mui/material';
 
 interface IOrderItem {
@@ -22,11 +23,9 @@ interface IOrderItem {
 }
 
 export default function OrderList({ orderItems, orderCheckItems }: any) {
-  console.log(orderItems);
-  console.log(orderCheckItems);
   return (
     <>
-      <Table>
+      <Table sx={{ width: 1000 }}>
         <TableHead>
           <TableRow>
             <TableCell>상품이미지</TableCell>
@@ -68,7 +67,8 @@ export default function OrderList({ orderItems, orderCheckItems }: any) {
             ))}
         </TableBody>
       </Table>
-      <div>
+
+      <Typography variant="h4" m={5} sx={{ color: '#FF0000' }}>
         총 주문 금액:{' '}
         {orderCheckItems
           .map(
@@ -81,7 +81,7 @@ export default function OrderList({ orderItems, orderCheckItems }: any) {
             return prev + curr;
           }, 0)
           .toLocaleString('ko-KR')}
-      </div>
+      </Typography>
     </>
   );
 }

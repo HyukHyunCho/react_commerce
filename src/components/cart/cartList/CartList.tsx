@@ -121,7 +121,6 @@ export default function CartList({
           <TableRow>
             <TableCell align="center">총상품 금액</TableCell>
             <TableCell align="center"></TableCell>
-
             <TableCell align="center">배송비</TableCell>
             <TableCell align="center"></TableCell>
             <TableCell align="center">총 결제 금액</TableCell>
@@ -133,7 +132,6 @@ export default function CartList({
               {cartItemTotalPrice.toLocaleString('ko-KR')}원
             </TableCell>
             <TableCell align="center">+</TableCell>
-
             <TableCell align="center">
               {cartItemFee.toLocaleString('ko-KR')}원
             </TableCell>
