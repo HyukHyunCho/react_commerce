@@ -16,6 +16,7 @@ import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import SearchIcon from '@mui/icons-material/Search';
 import { useNavigate } from 'react-router';
+import { getUserType } from '../../util/cookie';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -59,11 +60,12 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-const pages = ['홈', '장바구니', ''];
 const settings = ['프로필', '로그아웃'];
 
 function Header() {
   const navigate = useNavigate();
+  const userType = getUserType();
+
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
   );
@@ -84,11 +86,17 @@ function Header() {
       navigate('/');
     } else if (e.currentTarget.innerText === '장바구니') {
       navigate('/cart');
+    } else if (e.currentTarget.innerText === '게시물 작성') {
+      navigate('/seller');
     }
   };
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
+  };
+
+  const onSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    navigate(`/search?q=${e.target.value}`);
   };
 
   return (
@@ -142,11 +150,19 @@ function Header() {
                 display: { xs: 'block', md: 'none' },
               }}
             >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={(e) => handleCloseNavMenu(e)}>
-                  <Typography textAlign="center">{page}</Typography>
+              <MenuItem onClick={(e) => handleCloseNavMenu(e)}>
+                <Typography textAlign="center">홈</Typography>
+              </MenuItem>
+
+              {userType === 'SELLER' ? (
+                <MenuItem onClick={(e) => handleCloseNavMenu(e)}>
+                  <Typography textAlign="center">게시물 작성</Typography>
                 </MenuItem>
-              ))}
+              ) : (
+                <MenuItem onClick={(e) => handleCloseNavMenu(e)}>
+                  <Typography textAlign="center">장바구니</Typography>
+                </MenuItem>
+              )}
             </Menu>
           </Box>
           <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
@@ -169,17 +185,24 @@ function Header() {
             LOGO
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page) => (
-              <Button
-                key={page}
-                onClick={(e) => handleCloseNavMenu(e)}
-                sx={{ my: 2, color: 'white', display: 'block' }}
-              >
-                {page}
-              </Button>
-            ))}
+            <Button
+              onClick={(e) => handleCloseNavMenu(e)}
+              sx={{ my: 2, color: 'white', display: 'block' }}
+            >
+              홈
+            </Button>
+            {userType === 'BUYER' && (
+              <MenuItem onClick={(e) => handleCloseNavMenu(e)}>
+                <Typography textAlign="center">장바구니</Typography>
+              </MenuItem>
+            )}
+            {userType === 'SELLER' && (
+              <MenuItem onClick={(e) => handleCloseNavMenu(e)}>
+                <Typography textAlign="center">게시물 작성</Typography>
+              </MenuItem>
+            )}
           </Box>
-          <Box sx={{ flexGrow: 0.2, mr: 4 }}>
+          <Box sx={{ flexGrow: 0, mr: 4 }}>
             <Search>
               <SearchIconWrapper>
                 <SearchIcon />
@@ -187,6 +210,7 @@ function Header() {
               <StyledInputBase
                 placeholder="Search…"
                 inputProps={{ 'aria-label': 'search' }}
+                onChange={onSearchChange}
               />
             </Search>
           </Box>
