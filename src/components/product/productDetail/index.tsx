@@ -1,5 +1,4 @@
-import { Button, Container, CssBaseline, Typography } from '@mui/material';
-import Box from '@mui/material/Box';
+import { Button, Typography } from '@mui/material';
 import Grid from '@mui/material/Unstable_Grid2';
 import style from './style/style.module.css';
 
@@ -18,29 +17,21 @@ interface IProduct {
   updated_at: string;
 }
 
-interface ICart {
-  cart_item_id: number;
-  is_active: boolean;
-  my_cart: number;
-  product_id: number;
-  quantity: number;
-}
-
 interface IProductProps {
   productDetailData: IProduct;
-  // cartData: ICart;
   count: number;
   onCountClick: (value: string) => void;
-  onClickAddCart: (value: number) => void;
+  onClickOrder: () => void;
+  onClickAddCart: () => void;
 }
 
 export default function ProductDetail({
   productDetailData,
   count,
   onCountClick,
+  onClickOrder,
   onClickAddCart,
 }: IProductProps) {
-  console.log(productDetailData);
   return (
     <>
       {productDetailData && (
@@ -77,12 +68,14 @@ export default function ProductDetail({
               </button>
             </div>
             <div>총 상품 금액 : </div>
-            <Button variant="contained">바로구매</Button>
+            <Button variant="contained" onClick={() => onClickOrder()}>
+              바로구매
+            </Button>
             <Button
               type="button"
               variant="contained"
               color="secondary"
-              onClick={() => onClickAddCart(productDetailData.product_id)}
+              onClick={() => onClickAddCart()}
             >
               장바구니
             </Button>

@@ -52,7 +52,6 @@ export default function OrderList({ orderItems, orderCheckItems }: any) {
                 </TableCell>
                 <TableCell>{item.store_name}</TableCell>
                 <TableCell>{item.product_name}</TableCell>
-
                 <TableCell>
                   {item.shipping_method === 'PARCEL'
                     ? '택배'

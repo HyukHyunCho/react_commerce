@@ -7,21 +7,6 @@ import {
 } from '@mui/material';
 import { Button, Checkbox } from '@mui/material';
 
-interface ICartItem {
-  created_at: string;
-  image: string;
-  price: number;
-  product_id: number;
-  product_info: string;
-  product_name: string;
-  seller: number;
-  shipping_fee: number;
-  shipping_method: string;
-  stock: number;
-  store_name: string;
-  updated_at: string;
-}
-
 const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 
 export default function CartList({

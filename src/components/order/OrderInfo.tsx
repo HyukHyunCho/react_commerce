@@ -1,4 +1,4 @@
-import { Button, Grid, TextField, Typography } from '@mui/material';
+import { Grid, TextField, Typography } from '@mui/material';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -10,7 +10,13 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardHeader from '@mui/material/CardHeader';
 
-export default function OrderInfo({ orderItems, orderCheckItems }: any) {
+export default function OrderInfo({
+  orderItems,
+  orderCheckItems,
+  cartItemFee,
+  cartItemTotalPrice,
+  children,
+}: any) {
   return (
     <>
       <Typography variant="h6" gutterBottom>
@@ -22,106 +28,30 @@ export default function OrderInfo({ orderItems, orderCheckItems }: any) {
         </Grid>
         <Grid item xs={12} sm={4}>
           <TextField
-            required
-            id="firstName"
-            name="firstName"
+            name="user_name"
             label="이름"
             fullWidth
-            autoComplete="given-name"
             variant="standard"
           />
         </Grid>
         <Grid item xs={12} sm={4}>
           <TextField
-            required
-            id="lastName"
-            name="lastName"
+            name="phone_number"
             label="휴대폰"
             fullWidth
-            autoComplete="family-name"
             variant="standard"
           />
         </Grid>
         <Grid item xs={12} sm={4}>
-          <TextField
-            required
-            id="address1"
-            name="address1"
-            label="이메일"
-            fullWidth
-            autoComplete="shipping address-line1"
-            variant="standard"
-          />
+          <TextField name="email" label="이메일" fullWidth variant="standard" />
         </Grid>
         <Grid item xs={12}>
           <Typography variant="h6">배송지 정보</Typography>
         </Grid>
-
-        <Grid item xs={12} sm={6}>
-          <TextField
-            id="address2"
-            name="address2"
-            label="수령인"
-            fullWidth
-            autoComplete="shipping address-line2"
-            variant="standard"
-          />
+        <Grid item xs={12} sm={7}>
+          {children}
         </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            required
-            id="city"
-            name="city"
-            label="휴대폰"
-            fullWidth
-            autoComplete="shipping address-level2"
-            variant="standard"
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <TextField
-            id="state"
-            name="state"
-            label="배송주소"
-            fullWidth
-            variant="standard"
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <TextField
-            required
-            id="zip"
-            name="zip"
-            label="배송 메시지"
-            fullWidth
-            autoComplete="shipping postal-code"
-            variant="standard"
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <FormControl>
-            <FormLabel id="demo-row-radio-buttons-group-label">
-              결제수단
-            </FormLabel>
-            <RadioGroup
-              row
-              aria-labelledby="demo-row-radio-buttons-group-label"
-              name="row-radio-buttons-group"
-            >
-              <FormControlLabel
-                value="female"
-                control={<Radio />}
-                label="신용/체크카드"
-              />
-              <FormControlLabel
-                value="male"
-                control={<Radio />}
-                label="무통장입금"
-              />
-            </RadioGroup>
-          </FormControl>
-        </Grid>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={12} sm={5}>
           <Grid container spacing={5} alignItems="flex-end">
             <Grid item xs={12}>
               <Card>
@@ -137,37 +67,31 @@ export default function OrderInfo({ orderItems, orderCheckItems }: any) {
                   }}
                 />
                 <CardContent>
-                  {/* <Typography variant="subtitle1" align="center">
-                    {'상품금액'}
+                  <Typography variant="subtitle1" align="center">
+                    {`상품금액: ${cartItemTotalPrice.toLocaleString(
+                      'ko-KR'
+                    )}원`}
                   </Typography>
                   <Typography variant="subtitle1" align="center">
                     {'할인금액: 0 원'}
                   </Typography>
                   <Typography variant="subtitle1" align="center">
-                    {'배송비'}
-                  </Typography> */}
+                    {`배송비: ${cartItemFee.toLocaleString('ko-KR')}원`}
+                  </Typography>
 
                   <Box
                     sx={{
                       display: 'flex',
                       justifyContent: 'center',
                       alignItems: 'baseline',
+                      mt: 5,
                       mb: 2,
                     }}
                   >
-                    <Typography variant="subtitle1" align="center">
-                      {'최종결제 금액'}
+                    <Typography variant="h5" align="center">
+                      {'최종결제 금액: '}
                     </Typography>
-                  </Box>
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      justifyContent: 'center',
-                      alignItems: 'baseline',
-                      mb: 2,
-                    }}
-                  >
-                    <Typography component="h2" variant="h3" color="error">
+                    <Typography variant="h4" color="error">
                       {orderCheckItems
                         .map(
                           (
