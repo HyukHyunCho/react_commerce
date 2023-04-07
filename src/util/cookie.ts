@@ -19,8 +19,8 @@ export function setUserTypeCookie(userType: string) {
   });
 }
 
-export const getCookie = (name: string) => {
-  return cookies.get(name);
+export const getToken = () => {
+  return cookies.get('access_token');
 };
 
 export const getUserType = () => {
