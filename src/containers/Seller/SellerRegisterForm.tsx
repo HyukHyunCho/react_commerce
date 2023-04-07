@@ -35,8 +35,6 @@ export default function SellerRegisterForm() {
     if (e.target instanceof HTMLInputElement && e.target.files !== null) {
       setValue('image', e.target.files[0]);
       setPreviewImg(URL.createObjectURL(e.target.files[0]));
-      console.log(e);
-      console.log(e.target.files[0]);
       URL.revokeObjectURL(previewImg);
     }
   };
