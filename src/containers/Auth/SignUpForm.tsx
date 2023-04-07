@@ -1,21 +1,13 @@
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
-import { Controller, SubmitHandler, useForm } from 'react-hook-form';
+import { Controller, FieldValues, useForm } from 'react-hook-form';
 import { useIdCheck, useSignUp } from '../../hooks/useAuth';
 import { useNavigate } from 'react-router';
 import Layout from '../../components/common/Layout';
 
-interface IFormValue {
-  username: string;
-  password: string;
-  password2: string;
-  phone_number: string;
-  name: string;
-}
-
 export default function SignUpForm() {
   const navigate = useNavigate();
-  const { handleSubmit, control, watch } = useForm<IFormValue>();
+  const { handleSubmit, control, watch } = useForm();
 
   const {
     mutate: idCheck,
@@ -31,7 +23,7 @@ export default function SignUpForm() {
     error: signupError,
   } = useSignUp();
 
-  const onSubmit: SubmitHandler<IFormValue> = async (formData: IFormValue) => {
+  const onSubmit = async (formData: FieldValues) => {
     const { username } = formData;
 
     idCheck(username, {
@@ -77,6 +69,7 @@ export default function SignUpForm() {
           defaultValue={''}
           render={({ field: { onChange, value }, fieldState: { error } }) => (
             <TextField
+              type="password"
               label="비밀번호"
               variant="outlined"
               fullWidth
@@ -106,6 +99,7 @@ export default function SignUpForm() {
           defaultValue={''}
           render={({ field: { onChange, value }, fieldState: { error } }) => (
             <TextField
+              type="password"
               label="비밀번호 확인"
               variant="outlined"
               fullWidth

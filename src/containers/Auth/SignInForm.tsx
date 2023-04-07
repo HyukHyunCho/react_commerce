@@ -1,6 +1,11 @@
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
-import { Controller, SubmitHandler, useForm } from 'react-hook-form';
+import {
+  Controller,
+  FieldValues,
+  SubmitHandler,
+  useForm,
+} from 'react-hook-form';
 import { useLogin } from '../../hooks/useAuth';
 import { useNavigate } from 'react-router';
 import { setTokenCookie } from '../../util/cookie';
@@ -15,15 +20,15 @@ interface IFormValue {
 
 export default function SignInForm() {
   const navigate = useNavigate();
-  const { handleSubmit, control } = useForm<IFormValue>();
+  const { handleSubmit, control } = useForm();
   const { mutate } = useLogin();
 
-  const onSubmit: SubmitHandler<IFormValue> = async (formData: IFormValue) => {
+  const onSubmit = async (formData: FieldValues) => {
     mutate(formData, {
       onSuccess: (res) => {
         setTokenCookie(res.token);
         setUserTypeCookie(res.user_type);
-        localStorage.setItem('access_token', res.token);
+        // localStorage.setItem('access_token', res.token);
         navigate('/');
       },
     });
