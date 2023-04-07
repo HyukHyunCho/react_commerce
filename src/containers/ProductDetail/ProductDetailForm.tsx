@@ -6,6 +6,7 @@ import { useCart, useCreateCart } from '../../hooks/useCart';
 import { getCookie } from '../../util/cookie';
 import Modal from '../../components/modal';
 import Layout from '../../components/common/Layout';
+import { useShoppingCartCheck } from '../../hooks/useCartCheck';
 
 interface ICartItem {
   cart_item_id: number;
@@ -25,7 +26,8 @@ export default function ProductDetailForm() {
   const [count, setCount] = useState(1);
   const { data: productDetailData } = useProductDetail(Number(id));
 
-  const { data: cartData } = useCart();
+  const { data: cartCheckData } = useShoppingCartCheck();
+
   const { mutate } = useCreateCart();
 
   const handleClose = () => {
@@ -34,7 +36,7 @@ export default function ProductDetailForm() {
 
   const onCountClick = (value: string) => {
     if (value === 'plus') {
-      if (cartData.stock <= count) return;
+      if (productDetailData.stock <= count) return;
       setCount(count + 1);
     } else {
       if (count < 2) return;
@@ -43,12 +45,12 @@ export default function ProductDetailForm() {
   };
 
   const onClickAddCart = () => {
+    if (!userType) return alert('로그인이 필요한 서비스입니다.');
     if (userType === 'SELLER') return alert('판매자는 구매할 수 없습니다.');
 
-    const shoppingCartData = cartData.find(
+    const shoppingCartData = cartCheckData.find(
       (item: ICartItem) => item.product_id === productDetailData.product_id
     );
-
     const shoppingCartCheck = shoppingCartData === undefined ? true : false;
 
     if (shoppingCartCheck === false) {
@@ -63,7 +65,6 @@ export default function ProductDetailForm() {
       quantity: count,
       check: true,
     };
-
     mutate(req, {
       onSuccess: (res) => {
         setModalTitle('상품이 장바구니에 추가 되었습니다.');
@@ -81,7 +82,7 @@ export default function ProductDetailForm() {
     <Layout title="상품 상세" size={1000}>
       <ProductDetail
         productDetailData={productDetailData}
-        cartData={cartData}
+        //cartData={cartData}
         count={count}
         onCountClick={onCountClick}
         onClickAddCart={onClickAddCart}

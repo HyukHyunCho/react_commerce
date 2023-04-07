@@ -17,6 +17,7 @@ import AdbIcon from '@mui/icons-material/Adb';
 import SearchIcon from '@mui/icons-material/Search';
 import { useNavigate } from 'react-router';
 import { getUserType } from '../../util/cookie';
+import { removeCookie } from '../../util/cookie';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -47,7 +48,6 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: 'inherit',
   '& .MuiInputBase-input': {
     padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
     transition: theme.transitions.create('width'),
     width: '100%',
@@ -59,8 +59,6 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
   },
 }));
-
-const settings = ['프로필', '로그아웃'];
 
 function Header() {
   const navigate = useNavigate();
@@ -93,6 +91,8 @@ function Header() {
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
+    removeCookie();
+    navigate('/');
   };
 
   const onSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -215,33 +215,48 @@ function Header() {
             </Search>
           </Box>
           <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: '45px' }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
+            {userType ? (
+              <>
+                <Tooltip title="Open settings">
+                  <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                    <Avatar
+                      alt="Remy Sharp"
+                      src="/static/images/avatar/2.jpg"
+                    />
+                  </IconButton>
+                </Tooltip>
+                <Menu
+                  sx={{ mt: '45px' }}
+                  id="menu-appbar"
+                  anchorEl={anchorElUser}
+                  anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                  open={Boolean(anchorElUser)}
+                  onClose={handleCloseUserMenu}
+                >
+                  {/* {settings.map((setting) => ( */}
+                  <MenuItem onClick={handleCloseUserMenu}>
+                    <Typography textAlign="center">로그아웃</Typography>
+                  </MenuItem>
+                  {/* ))} */}
+                </Menu>
+              </>
+            ) : (
+              <Typography
+                textAlign="center"
+                sx={{ cursor: 'pointer' }}
+                onClick={() => navigate('/signin')}
+              >
+                로그인
+              </Typography>
+            )}
           </Box>
         </Toolbar>
       </Container>

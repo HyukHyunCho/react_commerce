@@ -28,10 +28,10 @@ interface ICart {
 
 interface IProductProps {
   productDetailData: IProduct;
-  cartData: ICart;
+  // cartData: ICart;
   count: number;
   onCountClick: (value: string) => void;
-  onClickAddCart: () => void;
+  onClickAddCart: (value: number) => void;
 }
 
 export default function ProductDetail({
@@ -82,7 +82,7 @@ export default function ProductDetail({
               type="button"
               variant="contained"
               color="secondary"
-              onClick={() => onClickAddCart()}
+              onClick={() => onClickAddCart(productDetailData.product_id)}
             >
               장바구니
             </Button>
