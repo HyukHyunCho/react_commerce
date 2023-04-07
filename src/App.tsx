@@ -10,6 +10,7 @@ import Order from './pages/Order';
 import Search from './pages/Search';
 import Seller from './pages/Seller';
 import SellerRegister from './pages/SellerRegister';
+import Payment from './pages/Payment';
 
 const Layout = () => {
   return (
@@ -34,6 +35,7 @@ function App() {
         <Route path="order" element={<Order />} />
         <Route path="seller" element={<Seller />} />
         <Route path="seller/:id" element={<SellerRegister />} />
+        <Route path="payment" element={<Payment />} />
       </Route>
     </Routes>
   );
