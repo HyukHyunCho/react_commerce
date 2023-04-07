@@ -30,9 +30,6 @@ export default function CartForm() {
   const [cartItemPayPrice, setCartItemPayPrice] = useState(0);
   //const isSuccess = cartQueries.every((info) => info.status === 'success');
 
-  console.log(cartData);
-  console.log(cartQueries);
-
   const onClickOrder = () => {
     if (cartCheckItems.length === 0) {
       return alert('주문할 상품을 선택하세요.');
@@ -42,6 +39,9 @@ export default function CartForm() {
       state: {
         orderItems: cartData,
         orderCheckItems: cartCheckItems,
+        cartItemTotalPrice: cartItemTotalPrice,
+        cartItemFee: cartItemFee,
+        orderType: 'cart_order',
       },
     });
   };
