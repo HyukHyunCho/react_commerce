@@ -84,6 +84,8 @@ function Header() {
       navigate('/');
     } else if (e.currentTarget.innerText === '장바구니') {
       navigate('/cart');
+    } else if (e.currentTarget.innerText === '주문목록') {
+      navigate('/payment');
     } else if (e.currentTarget.innerText === '게시물 작성') {
       navigate('/seller');
     }
@@ -163,6 +165,11 @@ function Header() {
                   <Typography textAlign="center">장바구니</Typography>
                 </MenuItem>
               )}
+              {userType === 'BUYER' && (
+                <MenuItem onClick={(e) => handleCloseNavMenu(e)}>
+                  <Typography textAlign="center">주문목록</Typography>
+                </MenuItem>
+              )}
             </Menu>
           </Box>
           <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
@@ -199,6 +206,11 @@ function Header() {
             {userType === 'SELLER' && (
               <MenuItem onClick={(e) => handleCloseNavMenu(e)}>
                 <Typography textAlign="center">게시물 작성</Typography>
+              </MenuItem>
+            )}
+            {userType === 'BUYER' && (
+              <MenuItem onClick={(e) => handleCloseNavMenu(e)}>
+                <Typography textAlign="center">주문목록</Typography>
               </MenuItem>
             )}
           </Box>
