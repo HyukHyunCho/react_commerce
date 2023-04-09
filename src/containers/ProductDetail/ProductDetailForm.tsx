@@ -27,9 +27,7 @@ export default function ProductDetailForm() {
   const [count, setCount] = useState(1);
   const { data: productDetailData } = useProductDetail(Number(id));
   const { data: cartCheckData } = useShoppingCartCheck();
-  const { data: cartData, cartQueries } = useCart();
   const { mutate: addCart } = useAddCart();
-  const { mutate: addPayment } = useAddOrder();
 
   const handleClose = () => {
     setOpen(false);
@@ -106,12 +104,9 @@ export default function ProductDetailForm() {
     });
   };
 
-  const onClickCartMove = () => {
-    navigate('/cart');
-  };
-
   return (
-    <Layout title="상품 상세" size={1000}>
+    // <Layout title="상품 상세" size={1200}>
+    <>
       <ProductDetail
         productDetailData={productDetailData}
         count={count}
@@ -127,6 +122,7 @@ export default function ProductDetailForm() {
           subTitle={modalSubTitle}
         />
       )}
-    </Layout>
+    </>
+    // </Layout>
   );
 }

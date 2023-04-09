@@ -165,7 +165,7 @@ export default function OrderInfoForm({
               name="payment_method"
               control={control}
               defaultValue={'CARD'}
-              render={({ field: { onChange, value } }) => (
+              render={({ field: { onChange } }) => (
                 <FormControl>
                   <FormLabel id="demo-row-radio-buttons-group-label">
                     결제수단
@@ -194,7 +194,13 @@ export default function OrderInfoForm({
           type="submit"
           variant="contained"
           fullWidth
-          sx={{ mt: 5 }}
+          sx={{
+            mt: 3,
+            '&:hover': {
+              backgroundColor: '#4C4C4C',
+            },
+            backgroundColor: '#000',
+          }}
           // onClick={onClickOrder}
         >
           주문하기

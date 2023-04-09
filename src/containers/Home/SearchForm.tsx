@@ -18,7 +18,7 @@ export default function SearchForm() {
   const debouncedSearchKey = useDebounce(String(searchKey), 500);
 
   useEffect(() => {
-    if (debouncedSearchKey !== undefined) {
+    if (debouncedSearchKey !== '') {
       refetch();
     } else {
       navigate('/');
@@ -26,7 +26,7 @@ export default function SearchForm() {
   }, [refetch, debouncedSearchKey]);
 
   return (
-    <Layout title={'검색 리스트'} size={700}>
+    <Layout title={'검색 리스트'}>
       {data && data.length > 0 ? (
         <ProductList products={data} />
       ) : (

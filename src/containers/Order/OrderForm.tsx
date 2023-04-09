@@ -14,14 +14,8 @@ export default function OrderForm() {
     },
   } = useLocation();
 
-  // console.log(orderItems);
-  // console.log(orderCheckItems);
-  // console.log(cartItemTotalPrice);
-  // console.log(cartItemFee);
-  // console.log(orderType);
-
   return (
-    <Layout title="주문하기" size={1000}>
+    <Layout title="주문하기">
       {orderItems && (
         <>
           <OrderList
