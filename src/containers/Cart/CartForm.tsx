@@ -134,7 +134,7 @@ export default function CartForm() {
   };
 
   return (
-    <Layout title="장바구니" size={1000}>
+    <Layout title="장바구니">
       {cartData && (
         <CartList
           cartData={cartData}
@@ -149,9 +149,15 @@ export default function CartForm() {
         />
       )}
       <Button
-        type="button"
         variant="contained"
         fullWidth
+        sx={{
+          mt: 3,
+          '&:hover': {
+            backgroundColor: '#4C4C4C',
+          },
+          backgroundColor: '#000',
+        }}
         onClick={onClickOrder}
       >
         주문하기

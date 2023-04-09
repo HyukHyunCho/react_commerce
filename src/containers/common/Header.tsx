@@ -102,7 +102,7 @@ function Header() {
   };
 
   return (
-    <AppBar position="static">
+    <AppBar position="static" color="transparent">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
@@ -122,7 +122,6 @@ function Header() {
           >
             MARKET
           </Typography>
-
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
               size="large"
@@ -192,12 +191,9 @@ function Header() {
             LOGO
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            <Button
-              onClick={(e) => handleCloseNavMenu(e)}
-              sx={{ my: 2, color: 'white', display: 'block' }}
-            >
-              홈
-            </Button>
+            <MenuItem onClick={(e) => handleCloseNavMenu(e)}>
+              <Typography textAlign="center">홈</Typography>
+            </MenuItem>
             {userType === 'BUYER' && (
               <MenuItem onClick={(e) => handleCloseNavMenu(e)}>
                 <Typography textAlign="center">장바구니</Typography>
