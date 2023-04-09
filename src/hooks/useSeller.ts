@@ -8,16 +8,6 @@ import {
   updateProduct,
 } from '../services/apis';
 
-interface IFormProduct {
-  image: string;
-  product_name: string;
-  price: number;
-  shipping_method: string;
-  shipping_fee: number;
-  stock: number;
-  product_info: string;
-}
-
 export const useSellerProduct = () => {
   return useQuery(['sellerData'], () => geSellerProduct());
 };
