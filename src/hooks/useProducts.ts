@@ -34,13 +34,21 @@ export const useProduct = () => {
     }
   }, [queryClient, currentPage, maxPage]);
 
+  const getProductsStatic = async () => {
+    const { data } = await instance.get(`products/?page=2`);
+    return data.results;
+  };
+
   const getProducts = async (pageNum: number) => {
     const { data } = await instance.get(`products/?page=${pageNum}`);
     setMaxPage(Math.ceil(data.count / 15));
     return data.results;
   };
 
-  // 다음페이지 상품목록 미리 불러오기
+  const { data: productsStatic } = useQuery(['productsStatic'], () =>
+    getProductsStatic()
+  );
+
   const { data: products = fallBack } = useQuery(
     ['products', currentPage],
     () => getProducts(currentPage),
@@ -49,24 +57,24 @@ export const useProduct = () => {
     }
   );
 
-  return { products, maxPage, currentPage, setCurrentPage };
+  return { products, productsStatic, maxPage, currentPage, setCurrentPage };
 };
 
-const initialUrl = 'https://openmarket.weniv.co.kr/products/';
+// const initialUrl = 'https://openmarket.weniv.co.kr/products/';
 
-export const useSellerProductInfinite = () => {
-  const getProducts = async (pageParam: string) => {
-    const { data } = await instance.get(pageParam);
+// export const useSellerProductInfinite = () => {
+//   const getProducts = async (pageParam: string) => {
+//     const { data } = await instance.get(pageParam);
 
-    return data.results;
-  };
+//     return data.results;
+//   };
 
-  const { data, fetchNextPage, hasNextPage } = useInfiniteQuery(
-    ['products'],
-    ({ pageParam = initialUrl }) => getProducts(pageParam),
-    {
-      getNextPageParam: (lastPage) => lastPage.next || undefined,
-    }
-  );
-  return { data, fetchNextPage, hasNextPage };
-};
+//   const { data, fetchNextPage, hasNextPage } = useInfiniteQuery(
+//     ['products'],
+//     ({ pageParam = initialUrl }) => getProducts(pageParam),
+//     {
+//       getNextPageParam: (lastPage) => lastPage.next || undefined,
+//     }
+//   );
+//   return { data, fetchNextPage, hasNextPage };
+// };
