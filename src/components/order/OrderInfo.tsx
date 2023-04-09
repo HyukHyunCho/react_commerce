@@ -1,10 +1,4 @@
 import { Grid, TextField, Typography } from '@mui/material';
-import Radio from '@mui/material/Radio';
-import RadioGroup from '@mui/material/RadioGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormControl from '@mui/material/FormControl';
-import FormLabel from '@mui/material/FormLabel';
-
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -19,11 +13,8 @@ export default function OrderInfo({
 }: any) {
   return (
     <>
-      <Typography variant="h6" gutterBottom>
-        Shipping address
-      </Typography>
       <Grid container spacing={3}>
-        <Grid item xs={12}>
+        <Grid item xs={12} mt={3}>
           <Typography variant="h6">주문자 정보</Typography>
         </Grid>
         <Grid item xs={12} sm={4}>
@@ -63,7 +54,7 @@ export default function OrderInfo({
                   }}
                   sx={{
                     color: '#fff',
-                    backgroundColor: () => '#1565c0',
+                    backgroundColor: () => '#000',
                   }}
                 />
                 <CardContent>

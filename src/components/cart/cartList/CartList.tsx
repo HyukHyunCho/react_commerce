@@ -5,7 +5,9 @@ import {
   TableBody,
   TableCell,
 } from '@mui/material';
-import { Button, Checkbox } from '@mui/material';
+import { Checkbox } from '@mui/material';
+import IconButton from '@mui/material/IconButton';
+import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 
 const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 
@@ -87,14 +89,13 @@ export default function CartList({
                       원
                     </TableCell>
                     <TableCell>
-                      <Button
-                        type="button"
-                        variant="contained"
-                        color="error"
+                      <IconButton
+                        aria-label="delete"
+                        size="small"
                         onClick={() => onClickCartDelete(item.data.product_id)}
                       >
-                        삭제
-                      </Button>
+                        <HighlightOffIcon />
+                      </IconButton>
                     </TableCell>
                   </TableRow>
                 )

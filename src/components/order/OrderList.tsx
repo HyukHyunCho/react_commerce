@@ -25,7 +25,7 @@ interface IOrderItem {
 export default function OrderList({ orderItems, orderCheckItems }: any) {
   return (
     <>
-      <Table sx={{ width: 1000 }}>
+      <Table>
         <TableHead>
           <TableRow>
             <TableCell>상품이미지</TableCell>
@@ -57,30 +57,17 @@ export default function OrderList({ orderItems, orderCheckItems }: any) {
                     ? '택배'
                     : '직접배송(화물배달)'}
                 </TableCell>
-                <TableCell>{item.shipping_fee}원</TableCell>
+                <TableCell>
+                  {item.shipping_fee.toLocaleString('ko-KR')}원
+                </TableCell>
                 {orderItems[idx].product_id === item.product_id && (
                   <TableCell>{orderItems[idx].quantity}개</TableCell>
                 )}
-                <TableCell>{item.price}원</TableCell>
+                <TableCell>{item.price.toLocaleString('ko-KR')}원</TableCell>
               </TableRow>
             ))}
         </TableBody>
       </Table>
-
-      <Typography variant="h4" m={5} sx={{ color: '#FF0000' }}>
-        총 주문 금액:{' '}
-        {orderCheckItems
-          .map(
-            (
-              el: { price: number; shipping_fee: number },
-              idx: string | number
-            ) => el.price * orderItems[idx].quantity + el.shipping_fee
-          )
-          .reduce((prev: any, curr: any) => {
-            return prev + curr;
-          }, 0)
-          .toLocaleString('ko-KR')}
-      </Typography>
     </>
   );
 }

@@ -4,9 +4,11 @@ import style from './style/index.module.css';
 interface Iitem {
   product_id: number;
   image: string;
-  price: string;
+  price: number;
   product_name: string;
   product_info: string;
+  store_name: string;
+  shipping_fee: number;
 }
 
 interface IItemData {
@@ -17,7 +19,7 @@ export default function ProductList({ products }: IItemData) {
   return (
     <ul className={style.items}>
       {products &&
-        products.map((product: any) => (
+        products.map((product: Iitem) => (
           <ProductItem key={product.product_id} product={product} />
         ))}
     </ul>

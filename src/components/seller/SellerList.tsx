@@ -29,7 +29,7 @@ export default function SellerList({
 }: any) {
   return (
     <>
-      <Table sx={{ width: 1000 }}>
+      <Table>
         <TableHead>
           <TableRow>
             <TableCell>상품이미지</TableCell>

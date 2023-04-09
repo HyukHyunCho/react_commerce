@@ -1,33 +1,40 @@
-import React, { useState } from 'react';
-import { Container, Box, Typography } from '@mui/material';
-
+import { Typography } from '@mui/material';
+import Grid from '@mui/material/Unstable_Grid2';
+import { Box } from '@mui/material';
 interface IProps {
   title: string;
   size?: number;
   children: React.ReactNode;
 }
 
-export default function Layout({ title, size, children }: IProps) {
+export default function Layout({ title, children }: IProps) {
   return (
-    <Container
-      sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
+    <Grid
+      container
+      columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+      sx={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignContent: 'center',
+        m: 1,
+      }}
     >
-      <Box sx={{ mt: 7 }}>
-        <Typography component="h1" variant="h5">
+      <Grid xs={12} mt={3}>
+        <Typography
+          component="h1"
+          variant="h5"
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            m: 1,
+          }}
+        >
           {title}
         </Typography>
-      </Box>
-      <Box
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          maxWidth: size,
-          mt: 5,
-        }}
-      >
-        {children}
-      </Box>
-    </Container>
+      </Grid>
+      <Grid xs={12} md={10}>
+        <Box sx={{ overflowX: 'scroll', overflowY: 'hidden' }}>{children}</Box>
+      </Grid>
+    </Grid>
   );
 }

@@ -2,36 +2,42 @@
   padding: 0.5em;
   margin: 0 auto;
 }
-
 .container:hover {
   cursor: pointer;
   transform: scale(1.02);
   transition: transform 250ms ease-in;
 }
-
 .container.grid {
   width: 22.5rem;
 }
-
-.container.list {
-  width: 100%;
-}
-
 .thumbnail {
-  width: 250px;
-  height: 250px;
-  box-shadow: 0 5px 18px -7px rgba(0, 0, 0, 1);
+  width: 300px;
+  height: 300px;
+  box-shadow: 0 5px 10px -7px rgba(0, 0, 0, 1);
 }
-
-.productName {
-  margin: 0;
-  font-size: 1rem;
+.storeName {
+  color: #747474;
+  font-size: 0.9rem;
   text-align: left;
-  font-weight: bold;
 }
-
-.productPrice {
+.productName {
   margin: 0;
   font-size: 0.8rem;
   text-align: left;
+  font-weight: 600;
+}
+.productPrice {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  text-align: left;
+}
+.shippingFee {
+  width: 45px;
+  height: 15px;
+  padding: 5px;
+  font-size: 0.6rem;
+  color: #000;
+  border-radius: 5px;
+  background-color: #f4f4f4;
 }
