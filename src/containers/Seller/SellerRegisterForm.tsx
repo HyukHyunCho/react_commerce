@@ -64,7 +64,6 @@ export default function SellerRegisterForm() {
         {previewImg && (
           <img src={previewImg} width={400} height={200} alt={previewImg} />
         )}
-
         <Controller
           name="image"
           control={control}
