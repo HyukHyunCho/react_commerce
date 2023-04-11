@@ -32,8 +32,6 @@ export default function ProductDetail({
   onClickOrder,
   onClickAddCart,
 }: IProductProps) {
-  console.log(productDetailData);
-
   return (
     <>
       {productDetailData && (
@@ -48,14 +46,14 @@ export default function ProductDetail({
               m: 10,
             }}
           >
-            <Grid xs={12} sm={6}>
+            <Grid xs={12} sm={5}>
               <img
                 src={productDetailData.image}
                 alt={productDetailData.image}
                 style={{ width: '100%' }}
               />
             </Grid>
-            <Grid xs={12} sm={6} sx={{ borderTop: '2px solid #000' }}>
+            <Grid xs={12} sm={7} sx={{ borderTop: '2px solid #000' }}>
               <Grid xs={12}>
                 <Typography variant="body2" sx={{ mt: 2, color: '#747474' }}>
                   {productDetailData.store_name}
@@ -73,8 +71,12 @@ export default function ProductDetail({
                   배송정보
                 </Typography>
                 <Typography variant="body2" sx={{ mt: 1 }}>
-                  배송비 :{' '}
-                  {productDetailData.shipping_fee.toLocaleString('ko-KR')}원
+                  배송비 :
+                  {productDetailData.shipping_fee === 0
+                    ? '무료배송'
+                    : `${productDetailData.shipping_fee.toLocaleString(
+                        'ko-KR'
+                      )} 원`}
                 </Typography>
                 <Typography variant="body2" sx={{ mt: 1 }}>
                   배송방법 :{' '}
@@ -187,56 +189,6 @@ export default function ProductDetail({
           </Grid>
         </>
       )}
-
-      {/* {productDetailData && (
-        <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-          <Grid xs={6}>
-            <img
-              className={style.img}
-              src={productDetailData.image}
-              alt={productDetailData.image}
-              width={500}
-            />
-          </Grid>
-          <Grid xs={6}>
-            <Typography>{productDetailData.store_name}</Typography>
-            <div>{productDetailData.product_name}</div>
-            <div>
-              {productDetailData.shipping_method === 'PARCEL'
-                ? '택배배송'
-                : '직접배송(화물배달)'}
-            </div>
-            <div>재고 : {productDetailData.stock}</div>
-            <div className={style.countContainer}>
-              <button
-                className={style.countBtn}
-                onClick={() => onCountClick('minus')}
-              >
-                -
-              </button>
-              <div className={style.count}>{count}</div>
-              <button
-                className={style.countBtn}
-                onClick={() => onCountClick('plus')}
-              >
-                +
-              </button>
-            </div>
-            <div>총 상품 금액 : </div>
-            <Button variant="contained" onClick={() => onClickOrder()}>
-              바로구매
-            </Button>
-            <Button
-              type="button"
-              variant="contained"
-              color="secondary"
-              onClick={() => onClickAddCart()}
-            >
-              장바구니
-            </Button>
-          </Grid>
-        </Grid>
-      )} */}
     </>
   );
 }

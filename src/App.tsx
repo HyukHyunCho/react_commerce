@@ -11,6 +11,7 @@ import Search from './pages/Search';
 import Seller from './pages/Seller';
 import SellerRegister from './pages/SellerRegister';
 import Payment from './pages/Payment';
+import PrivateRoute from './lib/PrivateRoute';
 
 const Layout = () => {
   return (
@@ -31,11 +32,28 @@ function App() {
         <Route index element={<Home />} />
         <Route path="search" element={<Search />} />
         <Route path="product/:id" element={<ProductDetail />} />
-        <Route path="cart" element={<Cart />} />
-        <Route path="order" element={<Order />} />
-        <Route path="seller" element={<Seller />} />
-        <Route path="seller/:id" element={<SellerRegister />} />
-        <Route path="payment" element={<Payment />} />
+        <Route
+          path="cart"
+          element={<PrivateRoute restricted={true} component={<Cart />} />}
+        />
+        <Route
+          path="order"
+          element={<PrivateRoute restricted={true} component={<Order />} />}
+        />
+        <Route
+          path="seller"
+          element={<PrivateRoute restricted={true} component={<Seller />} />}
+        />
+        <Route
+          path="seller/:id"
+          element={
+            <PrivateRoute restricted={true} component={<SellerRegister />} />
+          }
+        />
+        <Route
+          path="payment"
+          element={<PrivateRoute restricted={true} component={<Payment />} />}
+        />
       </Route>
     </Routes>
   );

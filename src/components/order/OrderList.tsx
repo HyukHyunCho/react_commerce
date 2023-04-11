@@ -4,7 +4,6 @@ import {
   TableRow,
   TableBody,
   TableCell,
-  Typography,
 } from '@mui/material';
 
 interface IOrderItem {

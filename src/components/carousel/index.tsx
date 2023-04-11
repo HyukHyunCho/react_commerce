@@ -1,5 +1,8 @@
 import BasicCarousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
+import Grid from '@mui/material/Unstable_Grid2';
+import { Typography } from '@mui/material';
+import { useNavigate } from 'react-router';
 
 const responsive = {
   desktop: {
@@ -32,7 +35,7 @@ interface ICarouselProps {
 }
 
 export default function Carousel({ products }: ICarouselProps) {
-  console.log(products);
+  const navigate = useNavigate();
   return (
     <BasicCarousel
       draggable={true}
@@ -42,11 +45,25 @@ export default function Carousel({ products }: ICarouselProps) {
     >
       {products &&
         products.map((item) => (
-          <div key={item.product_id}>
-            <img src={item.image} width={175} height={175} />
-            <p>{item.product_name}</p>
-            <p>{item.price}</p>
-          </div>
+          <Grid
+            key={item.product_id}
+            sx={{ cursor: 'pointer' }}
+            onClick={() => navigate(`/product/${item.product_id}`)}
+          >
+            <img
+              src={item.image}
+              alt={item.image}
+              width={'100%'}
+              height={150}
+              style={{
+                borderRadius: '5px',
+                boxShadow: '0 5px 10px -7px rgba(0, 0, 0, 1)',
+              }}
+            />
+            <Typography variant="body2" sx={{ textAlign: 'center' }}>
+              {item.product_name}
+            </Typography>
+          </Grid>
         ))}
     </BasicCarousel>
   );

@@ -7,16 +7,18 @@ import DialogTitle from '@mui/material/DialogTitle';
 
 interface ModalProps {
   open: boolean;
+  handleClick(): void;
+  handleClose(): void;
   title: string;
   subTitle: string;
-  handleClose(): void;
 }
 
 export default function Modal({
   open,
+  handleClick,
+  handleClose,
   title,
   subTitle,
-  handleClose,
 }: ModalProps) {
   return (
     <>
@@ -32,7 +34,7 @@ export default function Modal({
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          {/* <Button onClick={() => router.push('/cart')}>장바구니 이동</Button> */}
+          <Button onClick={handleClick}>이동</Button>
           <Button onClick={handleClose}>취소</Button>
         </DialogActions>
       </Dialog>

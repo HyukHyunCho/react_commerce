@@ -230,11 +230,14 @@ export default function SellerRegisterForm() {
         />
         <Button
           type="submit"
-          color="primary"
           variant="contained"
           fullWidth
           sx={{
-            mt: 2,
+            mt: 3,
+            '&:hover': {
+              backgroundColor: '#4C4C4C',
+            },
+            backgroundColor: '#000',
           }}
         >
           저장

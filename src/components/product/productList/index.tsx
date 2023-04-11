@@ -1,5 +1,5 @@
 import ProductItem from '../productItem';
-import style from './style/index.module.css';
+import Grid from '@mui/material/Unstable_Grid2';
 
 interface Iitem {
   product_id: number;
@@ -9,6 +9,7 @@ interface Iitem {
   product_info: string;
   store_name: string;
   shipping_fee: number;
+  stock: number;
 }
 
 interface IItemData {
@@ -17,11 +18,16 @@ interface IItemData {
 
 export default function ProductList({ products }: IItemData) {
   return (
-    <ul className={style.items}>
+    <Grid
+      sx={{
+        display: 'flex',
+        flexWrap: 'wrap',
+      }}
+    >
       {products &&
         products.map((product: Iitem) => (
           <ProductItem key={product.product_id} product={product} />
         ))}
-    </ul>
+    </Grid>
   );
 }

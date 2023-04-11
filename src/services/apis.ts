@@ -43,6 +43,11 @@ export const signUp = async (formData: FieldValues) => {
   return data;
 };
 
+export const getAllProduct = async () => {
+  const { data } = await instance.get('/products/');
+  return data;
+};
+
 export const getProductDetail = async (id: number) => {
   const { data } = await instance.get(`/products/${id}`);
   return data;
@@ -97,10 +102,10 @@ export const deleteCart = async (id: number) => {
   return res;
 };
 
-export const geSellerProduct = async () => {
+export const getSellerProduct = async (page: string) => {
   const {
     data: { results },
-  } = await authInstance.get(`/seller/`, {
+  } = await authInstance.get(page, {
     headers: {
       Authorization: `JWT ${getToken()}`,
     },
@@ -141,17 +146,6 @@ export const deleteProduct = async (id: number) => {
       Authorization: `JWT ${getToken()}`,
     },
   });
-};
-
-export const getOrder = async () => {
-  const {
-    data: { results },
-  } = await authInstance.get(`/order/`, {
-    headers: {
-      Authorization: `JWT ${getToken()}`,
-    },
-  });
-  return results;
 };
 
 export const addOrder = async (formData: FieldValues) => {

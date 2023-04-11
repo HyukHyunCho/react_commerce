@@ -5,6 +5,7 @@ import {
   TableBody,
   TableCell,
 } from '@mui/material';
+import InfiniteScroll from 'react-infinite-scroller';
 
 interface IPaymentData {
   buyer: number;
@@ -17,42 +18,59 @@ interface IPaymentData {
   total_price: number;
 }
 
-interface IPaymentProps {
-  paymentData: IPaymentData[];
+interface IResults {
+  results: IPaymentData[];
 }
 
-export default function PaymentList({ paymentData }: IPaymentProps) {
+// interface IPaymentProps {
+//   paymentData: IResults[];
+//   results: IPaymentData[];
+//   fetchNextPage: (page: number) => void;
+//   hasNextPage: boolean;
+// }
+
+export default function PaymentList({
+  paymentData,
+  fetchNextPage,
+  hasNextPage,
+}: any) {
   return (
-    <Table>
-      <TableHead>
-        <TableRow>
-          <TableCell>주문번호</TableCell>
-          <TableCell>구매자</TableCell>
-          <TableCell>받는사람</TableCell>
-          <TableCell>받는사람 연락처</TableCell>
-          <TableCell>배송메시지</TableCell>
-          <TableCell>결제방법</TableCell>
-          <TableCell>결제금액</TableCell>
-        </TableRow>
-      </TableHead>
-      <TableBody>
-        {paymentData &&
-          paymentData.map((item: IPaymentData) => (
-            <TableRow key={item.order_number}>
-              <TableCell>{item.order_number}</TableCell>
-              <TableCell>{item.buyer}</TableCell>
-              <TableCell>{item.receiver}</TableCell>
-              <TableCell>{item.receiver_phone_number}</TableCell>
-              <TableCell>{item.address_message}</TableCell>
-              <TableCell>
-                {item.payment_method === 'CARD' ? '카드결제' : '무통장'}
-              </TableCell>
-              <TableCell>
-                {item.total_price.toLocaleString('ko-KR')}원
-              </TableCell>
-            </TableRow>
-          ))}
-      </TableBody>
-    </Table>
+    <InfiniteScroll loadMore={fetchNextPage} hasMore={hasNextPage}>
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableCell>주문번호</TableCell>
+            {/* <TableCell>구매자</TableCell> */}
+            <TableCell>받는사람</TableCell>
+            <TableCell>받는사람 연락처</TableCell>
+            <TableCell>배송메시지</TableCell>
+            <TableCell>결제방법</TableCell>
+            <TableCell align="right">결제금액</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {paymentData &&
+            paymentData.pages.map(
+              (item: IResults) =>
+                item &&
+                item.results.map((data: IPaymentData) => (
+                  <TableRow key={data.order_number}>
+                    <TableCell>{data.order_number}</TableCell>
+                    {/* <TableCell>{data.buyer}</TableCell> */}
+                    <TableCell>{data.receiver}</TableCell>
+                    <TableCell>{data.receiver_phone_number}</TableCell>
+                    <TableCell>{data.address_message}</TableCell>
+                    <TableCell>
+                      {data.payment_method === 'CARD' ? '카드결제' : '무통장'}
+                    </TableCell>
+                    <TableCell align="right">
+                      {data.total_price.toLocaleString('ko-KR')}원
+                    </TableCell>
+                  </TableRow>
+                ))
+            )}
+        </TableBody>
+      </Table>
+    </InfiniteScroll>
   );
 }

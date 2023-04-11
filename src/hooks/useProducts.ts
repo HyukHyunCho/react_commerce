@@ -1,10 +1,7 @@
 import { useEffect, useState } from 'react';
-import {
-  useInfiniteQuery,
-  useQuery,
-  useQueryClient,
-} from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { instance } from '../util/instance';
+import { getAllProduct } from '../services/apis';
 
 export interface IProduct {
   image: string;
@@ -18,6 +15,10 @@ export interface IProduct {
   shipping_method: string;
   stock: number;
 }
+
+export const useAllProduct = () => {
+  return useQuery(['allProducts'], () => getAllProduct());
+};
 
 export const useProduct = () => {
   const queryClient = useQueryClient();
@@ -59,22 +60,3 @@ export const useProduct = () => {
 
   return { products, productsStatic, maxPage, currentPage, setCurrentPage };
 };
-
-// const initialUrl = 'https://openmarket.weniv.co.kr/products/';
-
-// export const useSellerProductInfinite = () => {
-//   const getProducts = async (pageParam: string) => {
-//     const { data } = await instance.get(pageParam);
-
-//     return data.results;
-//   };
-
-//   const { data, fetchNextPage, hasNextPage } = useInfiniteQuery(
-//     ['products'],
-//     ({ pageParam = initialUrl }) => getProducts(pageParam),
-//     {
-//       getNextPageParam: (lastPage) => lastPage.next || undefined,
-//     }
-//   );
-//   return { data, fetchNextPage, hasNextPage };
-// };

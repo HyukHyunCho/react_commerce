@@ -1,27 +1,18 @@
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
-import {
-  Controller,
-  FieldValues,
-  SubmitHandler,
-  useForm,
-} from 'react-hook-form';
+import { Controller, FieldValues, useForm } from 'react-hook-form';
 import { useLogin } from '../../hooks/useAuth';
 import { useNavigate } from 'react-router';
 import { setTokenCookie } from '../../util/cookie';
 import { setUserTypeCookie } from '../../util/cookie';
 import Layout from '../../components/common/Layout';
-
-interface IFormValue {
-  username: string;
-  password: string;
-  login_type: string;
-}
+import Alerts from '../../components/alert';
+import { AxiosError } from 'axios';
 
 export default function SignInForm() {
   const navigate = useNavigate();
   const { handleSubmit, control } = useForm();
-  const { mutate } = useLogin();
+  const { mutate, error } = useLogin();
 
   const onSubmit = async (formData: FieldValues) => {
     mutate(formData, {
@@ -35,7 +26,7 @@ export default function SignInForm() {
   };
 
   return (
-    <Layout title={'로그인'} size={400}>
+    <Layout title={'로그인'} size={3}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Controller
           name="username"
@@ -112,19 +103,44 @@ export default function SignInForm() {
             </TextField>
           )}
         />
-        <Button type="submit" color="primary" variant="contained" fullWidth>
+        <Button
+          type="submit"
+          color="primary"
+          variant="contained"
+          fullWidth
+          sx={{
+            '&:hover': {
+              backgroundColor: '#4C4C4C',
+            },
+            backgroundColor: '#000',
+          }}
+        >
           로그인
         </Button>
         <Button
-          color="primary"
           variant="outlined"
           fullWidth
-          sx={{ marginTop: '10px' }}
+          sx={{
+            mt: 1,
+            color: '#000',
+            border: '1px solid #d4d4d4',
+            '&:hover': {
+              border: '1px solid #d4d4d4',
+              backgroundColor: '#EAEAEA',
+            },
+            backgroundColor: '#fff',
+          }}
           onClick={() => navigate('/signup')}
         >
           회원가입
         </Button>
       </form>
+      {error instanceof AxiosError && (
+        <Alerts
+          severity={'error'}
+          message={error.response?.data.FAIL_Message}
+        />
+      )}
     </Layout>
   );
 }

@@ -90,8 +90,8 @@ export default function CartList({
                     </TableCell>
                     <TableCell>
                       <IconButton
-                        aria-label="delete"
                         size="small"
+                        color="error"
                         onClick={() => onClickCartDelete(item.data.product_id)}
                       >
                         <HighlightOffIcon />

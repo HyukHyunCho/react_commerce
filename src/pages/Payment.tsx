@@ -1,4 +1,4 @@
-import PaymentForm from '../containers/payment/PaymentForm';
+import PaymentForm from '../containers/Payment/PaymentForm';
 
 export default function Payment() {
   return <PaymentForm />;

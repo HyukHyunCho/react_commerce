@@ -4,9 +4,13 @@ import SellerList from '../../components/seller/SellerList';
 import { useNavigate } from 'react-router';
 import { Button, Typography } from '@mui/material';
 
+// import Highcharts from 'highcharts';
+// import HighchartsReact from 'highcharts-react-official';
+// import { useState } from 'react';
+
 export default function SellerForm() {
   const navigate = useNavigate();
-  const { data } = useSellerProduct();
+  const { data, fetchNextPage, hasNextPage } = useSellerProduct();
   const { mutate } = useDeleteProduct();
 
   const onClickDeleteProduct = (id: number) => {
@@ -22,28 +26,57 @@ export default function SellerForm() {
   };
 
   const onClickUpdateProduct = (id: number) => {
-    console.log(id);
     navigate(`/seller/${id}`, {
       state: { type: 'update' },
     });
   };
-  console.log();
+
+  // const [hoverData, setHoverData] = useState(null);
+  // const [chartOptions, setChartOptions] = useState({
+  //   xAxis: {
+  //     categories: ['A', 'B', 'C'],
+  //   },
+  //   series: [{ data: [1, 2, 3] }],
+  //   plotOptions: {
+  //     series: {
+  //       point: {
+  //         events: {
+  //           mouseOver(e: any) {
+  //             setHoverData(e.target.category);
+  //           },
+  //         },
+  //       },
+  //     },
+  //   },
+  // });
+
   return (
     <Layout title="게시물 리스트" size={1000}>
+      {/* <HighchartsReact highcharts={Highcharts} options={chartOptions} /> */}
+      {/* <Pie data={pieData} style={{ width: '100px', height: '100px' }} />; */}
       <Button
         type="button"
         variant="contained"
         fullWidth
+        sx={{
+          m: 3,
+          '&:hover': {
+            backgroundColor: '#4C4C4C',
+          },
+          backgroundColor: '#000',
+        }}
         onClick={onClickCreateProduct}
       >
         게시물 작성
       </Button>
-      {data && data.length !== 0 ? (
+      {data !== undefined && data.pages[0].length !== 0 ? (
         <SellerList
           sellerData={data}
           onClickCreateProduct={onClickCreateProduct}
           onClickUpdateProduct={onClickUpdateProduct}
           onClickDeleteProduct={onClickDeleteProduct}
+          fetchNextPage={fetchNextPage}
+          hasNextPage={hasNextPage}
         />
       ) : (
         <Typography component="h1" variant="h5">

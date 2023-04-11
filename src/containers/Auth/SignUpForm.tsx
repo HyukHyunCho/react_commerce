@@ -4,6 +4,8 @@ import { Controller, FieldValues, useForm } from 'react-hook-form';
 import { useIdCheck, useSignUp } from '../../hooks/useAuth';
 import { useNavigate } from 'react-router';
 import Layout from '../../components/common/Layout';
+import { AxiosError } from 'axios';
+import Alerts from '../../components/alert';
 
 export default function SignUpForm() {
   const navigate = useNavigate();
@@ -19,8 +21,8 @@ export default function SignUpForm() {
   const {
     mutate: signup,
     isLoading: signupIsLoading,
-    isError: signupIsError,
-    error: signupError,
+    //isError: signupIsError,
+    //error: signupError,
   } = useSignUp();
 
   const onSubmit = async (formData: FieldValues) => {
@@ -41,7 +43,7 @@ export default function SignUpForm() {
   };
 
   return (
-    <Layout title={'회원가입'} size={400}>
+    <Layout title={'회원가입'} size={3}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Controller
           name="username"
@@ -172,19 +174,44 @@ export default function SignUpForm() {
             required: '이름을 입력 해주세요.',
           }}
         />
-        <Button type="submit" color="primary" variant="contained" fullWidth>
+        <Button
+          type="submit"
+          color="primary"
+          variant="contained"
+          fullWidth
+          sx={{
+            '&:hover': {
+              backgroundColor: '#4C4C4C',
+            },
+            backgroundColor: '#000',
+          }}
+        >
           회원가입
         </Button>
         <Button
-          color="primary"
           variant="outlined"
-          sx={{ marginTop: '10px' }}
           fullWidth
+          sx={{
+            mt: 1,
+            color: '#000',
+            border: '1px solid #d4d4d4',
+            '&:hover': {
+              border: '1px solid #d4d4d4',
+              backgroundColor: '#EAEAEA',
+            },
+            backgroundColor: '#fff',
+          }}
           onClick={() => navigate('/signin')}
         >
           로그인 페이지로
         </Button>
       </form>
+      {idCheckErr instanceof AxiosError && (
+        <Alerts
+          severity={'error'}
+          message={idCheckErr.response?.data.FAIL_Message}
+        />
+      )}
     </Layout>
   );
 }

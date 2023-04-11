@@ -2,12 +2,10 @@ import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import ProductDetail from '../../components/product/productDetail';
 import { useProductDetail } from '../../hooks/useProductDetail';
-import { useAddCart, useCart } from '../../hooks/useCart';
+import { useAddCart } from '../../hooks/useCart';
 import { getUserType } from '../../util/cookie';
 import Modal from '../../components/modal';
-import Layout from '../../components/common/Layout';
 import { useShoppingCartCheck } from '../../hooks/useCartCheck';
-import { useAddOrder } from '../../hooks/useOrder';
 
 interface ICartItem {
   cart_item_id: number;
@@ -28,7 +26,7 @@ export default function ProductDetailForm() {
   const { data: productDetailData } = useProductDetail(Number(id));
   const { data: cartCheckData } = useShoppingCartCheck();
   const { mutate: addCart } = useAddCart();
-
+  console.log(productDetailData);
   const handleClose = () => {
     setOpen(false);
   };
@@ -40,6 +38,12 @@ export default function ProductDetailForm() {
     } else {
       if (count < 2) return;
       setCount(count - 1);
+    }
+  };
+
+  const stockCheck = () => {
+    if (productDetailData.stock === 0) {
+      return false;
     }
   };
 
@@ -68,9 +72,11 @@ export default function ProductDetailForm() {
   };
 
   const onClickOrder = () => {
-    const check = cartCheck();
+    const checkStock = stockCheck();
+    const checkCart = cartCheck();
 
-    if (!check) return;
+    if (!checkStock) return alert('품절된 제품 입니다.');
+    if (!checkCart) return;
 
     navigate('/order/', {
       state: {
@@ -86,9 +92,10 @@ export default function ProductDetailForm() {
   };
 
   const onClickAddCart = () => {
-    const check = cartCheck();
-
-    if (!check) return;
+    const checkStock = stockCheck();
+    const checkCart = cartCheck();
+    if (!checkStock) return alert('품절된 제품 입니다.');
+    if (!checkCart) return;
 
     const req = {
       product_id: productDetailData.product_id,
@@ -104,8 +111,11 @@ export default function ProductDetailForm() {
     });
   };
 
+  const onClickPage = () => {
+    navigate('/cart');
+  };
+
   return (
-    // <Layout title="상품 상세" size={1200}>
     <>
       <ProductDetail
         productDetailData={productDetailData}
@@ -118,11 +128,11 @@ export default function ProductDetailForm() {
         <Modal
           open={open}
           handleClose={handleClose}
+          handleClick={onClickPage}
           title={modalTitle}
           subTitle={modalSubTitle}
         />
       )}
     </>
-    // </Layout>
   );
 }

@@ -9,8 +9,6 @@ import InputBase from '@mui/material/InputBase';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
@@ -18,6 +16,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import { useNavigate } from 'react-router';
 import { getUserType } from '../../util/cookie';
 import { removeCookie } from '../../util/cookie';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -93,6 +92,9 @@ function Header() {
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
+  };
+
+  const handleLogout = () => {
     removeCookie();
     navigate('/');
   };
@@ -164,6 +166,7 @@ function Header() {
                   <Typography textAlign="center">장바구니</Typography>
                 </MenuItem>
               )}
+
               {userType === 'BUYER' && (
                 <MenuItem onClick={(e) => handleCloseNavMenu(e)}>
                   <Typography textAlign="center">주문목록</Typography>
@@ -204,6 +207,7 @@ function Header() {
                 <Typography textAlign="center">게시물 작성</Typography>
               </MenuItem>
             )}
+
             {userType === 'BUYER' && (
               <MenuItem onClick={(e) => handleCloseNavMenu(e)}>
                 <Typography textAlign="center">주문목록</Typography>
@@ -227,10 +231,7 @@ function Header() {
               <>
                 <Tooltip title="Open settings">
                   <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                    <Avatar
-                      alt="Remy Sharp"
-                      src="/static/images/avatar/2.jpg"
-                    />
+                    <AccountCircleIcon fontSize="large" />
                   </IconButton>
                 </Tooltip>
                 <Menu
@@ -250,7 +251,7 @@ function Header() {
                   onClose={handleCloseUserMenu}
                 >
                   {/* {settings.map((setting) => ( */}
-                  <MenuItem onClick={handleCloseUserMenu}>
+                  <MenuItem onClick={handleLogout}>
                     <Typography textAlign="center">로그아웃</Typography>
                   </MenuItem>
                   {/* ))} */}

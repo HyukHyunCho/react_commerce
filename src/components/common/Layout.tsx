@@ -1,13 +1,14 @@
 import { Typography } from '@mui/material';
 import Grid from '@mui/material/Unstable_Grid2';
-import { Box } from '@mui/material';
+
 interface IProps {
   title: string;
   size?: number;
   children: React.ReactNode;
 }
 
-export default function Layout({ title, children }: IProps) {
+export default function Layout({ title, size, children }: IProps) {
+  // console.log(error);
   return (
     <Grid
       container
@@ -16,7 +17,7 @@ export default function Layout({ title, children }: IProps) {
         display: 'flex',
         justifyContent: 'center',
         alignContent: 'center',
-        m: 1,
+        m: 3,
       }}
     >
       <Grid xs={12} mt={3}>
@@ -32,9 +33,7 @@ export default function Layout({ title, children }: IProps) {
           {title}
         </Typography>
       </Grid>
-      <Grid xs={12} md={10}>
-        <Box sx={{ overflowX: 'scroll', overflowY: 'hidden' }}>{children}</Box>
-      </Grid>
+      <Grid md={size}>{children}</Grid>
     </Grid>
   );
 }
