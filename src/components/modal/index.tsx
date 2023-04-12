@@ -11,6 +11,7 @@ interface ModalProps {
   handleClose(): void;
   title: string;
   subTitle: string;
+  modalType: string;
 }
 
 export default function Modal({
@@ -19,6 +20,7 @@ export default function Modal({
   handleClose,
   title,
   subTitle,
+  modalType,
 }: ModalProps) {
   return (
     <>
@@ -34,8 +36,14 @@ export default function Modal({
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClick}>이동</Button>
-          <Button onClick={handleClose}>취소</Button>
+          {modalType === '' ? (
+            <Button onClick={handleClose}>확인</Button>
+          ) : (
+            <>
+              <Button onClick={handleClick}>확인</Button>
+              <Button onClick={handleClose}>취소</Button>
+            </>
+          )}
         </DialogActions>
       </Dialog>
     </>
