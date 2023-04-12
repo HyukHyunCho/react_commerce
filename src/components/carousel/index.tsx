@@ -53,8 +53,8 @@ export default function Carousel({ products }: ICarouselProps) {
             <img
               src={item.image}
               alt={item.image}
-              width={'100%'}
-              height={150}
+              width={'98%'}
+              height={200}
               style={{
                 borderRadius: '5px',
                 boxShadow: '0 5px 10px -7px rgba(0, 0, 0, 1)',

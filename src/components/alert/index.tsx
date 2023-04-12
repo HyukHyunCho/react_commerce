@@ -30,17 +30,15 @@ export default function Alerts({ severity, message }: IAlertValue) {
       onClose={handleClose}
       anchorOrigin={{ vertical, horizontal }}
     >
-      <Stack sx={{ width: '100%' }} spacing={2}>
-        {severity === 'success' ? (
-          <Alert variant="filled" severity="success">
-            {message}
-          </Alert>
-        ) : (
-          <Alert variant="filled" severity={'error'}>
-            {message}
-          </Alert>
-        )}
-      </Stack>
+      {severity === 'success' ? (
+        <Alert variant="filled" severity="success">
+          {message}
+        </Alert>
+      ) : (
+        <Alert variant="filled" severity={'error'}>
+          {message}
+        </Alert>
+      )}
     </Snackbar>
   );
 }
