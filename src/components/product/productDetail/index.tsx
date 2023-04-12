@@ -21,16 +21,14 @@ interface IProductProps {
   productDetailData: IProduct;
   count: number;
   onCountClick: (value: string) => void;
-  onClickOrder: () => void;
-  onClickAddCart: () => void;
+  cartCheck: (value: string) => void;
 }
 
 export default function ProductDetail({
   productDetailData,
   count,
   onCountClick,
-  onClickOrder,
-  onClickAddCart,
+  cartCheck,
 }: IProductProps) {
   return (
     <>
@@ -144,7 +142,7 @@ export default function ProductDetail({
                       },
                       backgroundColor: '#fff',
                     }}
-                    onClick={() => onClickAddCart()}
+                    onClick={() => cartCheck('cart')}
                   >
                     장바구니
                   </Button>{' '}
@@ -160,7 +158,7 @@ export default function ProductDetail({
                       },
                       backgroundColor: '#000',
                     }}
-                    onClick={() => onClickOrder()}
+                    onClick={() => cartCheck('order')}
                   >
                     바로구매
                   </Button>
