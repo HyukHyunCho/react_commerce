@@ -15,7 +15,7 @@ export const useOrder = () => {
     return data;
   };
 
-  const { data, fetchNextPage, hasNextPage } = useInfiniteQuery(
+  const { data, fetchNextPage, hasNextPage, isLoading } = useInfiniteQuery(
     ['orderData'],
     ({ pageParam = BASE_URL + '/order/' }) => getOrder(pageParam),
     {
@@ -27,6 +27,7 @@ export const useOrder = () => {
     data,
     fetchNextPage,
     hasNextPage,
+    isLoading,
   };
 };
 
