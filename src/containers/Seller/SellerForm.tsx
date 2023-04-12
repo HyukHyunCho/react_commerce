@@ -3,6 +3,7 @@ import { useDeleteProduct, useSellerProduct } from '../../hooks/useSeller';
 import SellerList from '../../components/seller/SellerList';
 import { useNavigate } from 'react-router';
 import { Button, Typography } from '@mui/material';
+import Alerts from '../../components/alert';
 
 // import Highcharts from 'highcharts';
 // import HighchartsReact from 'highcharts-react-official';
@@ -11,10 +12,10 @@ import { Button, Typography } from '@mui/material';
 export default function SellerForm() {
   const navigate = useNavigate();
   const { data, fetchNextPage, hasNextPage } = useSellerProduct();
-  const { mutate } = useDeleteProduct();
+  const { mutate: deleteProduct, isSuccess } = useDeleteProduct();
 
   const onClickDeleteProduct = (id: number) => {
-    mutate(id, {
+    deleteProduct(id, {
       onSuccess: (res) => {},
     });
   };
@@ -52,8 +53,9 @@ export default function SellerForm() {
 
   return (
     <Layout title="게시물 리스트" size={1000}>
-      {/* <HighchartsReact highcharts={Highcharts} options={chartOptions} /> */}
-      {/* <Pie data={pieData} style={{ width: '100px', height: '100px' }} />; */}
+      {isSuccess && (
+        <Alerts severity={'error'} message={'삭제를 완료 하였습니다.'} />
+      )}
       <Button
         type="button"
         variant="contained"

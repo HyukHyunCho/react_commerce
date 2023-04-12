@@ -8,6 +8,8 @@ import { Controller, FieldValues, useForm } from 'react-hook-form';
 import { Button } from '@mui/material';
 import OrderInfo from '../../components/order/OrderInfo';
 import { useAddOrder } from '../../hooks/useOrder';
+import Alerts from '../../components/alert';
+import { useNavigate } from 'react-router';
 
 export default function OrderInfoForm({
   orderItems,
@@ -16,8 +18,9 @@ export default function OrderInfoForm({
   cartItemFee,
   orderType,
 }: any) {
+  const navigate = useNavigate();
   const { handleSubmit, control } = useForm();
-  const { mutate } = useAddOrder();
+  const { mutate, isSuccess } = useAddOrder();
 
   const onSubmit = async (formData: FieldValues) => {
     const totalPrice = orderCheckItems
@@ -38,7 +41,9 @@ export default function OrderInfoForm({
     formData.order_kind = orderType;
 
     mutate(formData, {
-      onSuccess: (res) => {},
+      onSuccess: (res) => {
+        navigate('/payment');
+      },
     });
   };
 
@@ -49,6 +54,9 @@ export default function OrderInfoForm({
       cartItemFee={cartItemFee}
       cartItemTotalPrice={cartItemTotalPrice}
     >
+      {isSuccess && (
+        <Alerts severity={'success'} message={'주문을 완료 하였습니다.'} />
+      )}
       <form onSubmit={handleSubmit(onSubmit)}>
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6}>

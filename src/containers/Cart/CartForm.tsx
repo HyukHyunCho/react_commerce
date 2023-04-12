@@ -4,6 +4,8 @@ import { useCart, useDeleteCart } from '../../hooks/useCart';
 import { useNavigate } from 'react-router';
 import { Button } from '@mui/material';
 import Layout from '../../components/common/Layout';
+import Spinner from '../../components/spinner';
+import Alerts from '../../components/alert';
 
 interface ICartItem {
   created_at: string;
@@ -22,41 +24,12 @@ interface ICartItem {
 
 export default function CartForm() {
   const navigate = useNavigate();
-  const { data: cartData, cartQueries } = useCart();
-  const { mutate } = useDeleteCart();
+  const { data: cartData, cartQueries, isLoading } = useCart();
+  const { mutate: deleteCart, isSuccess } = useDeleteCart();
   const [cartCheckItems, setCartCheckItems] = useState<ICartItem[]>([]);
   const [cartItemTotalPrice, setCartItemTotalPrice] = useState(0);
   const [cartItemFee, setCartItemFee] = useState(0);
   const [cartItemPayPrice, setCartItemPayPrice] = useState(0);
-  //const isSuccess = cartQueries.every((info) => info.status === 'success');
-
-  const onClickOrder = () => {
-    if (cartCheckItems.length === 0) {
-      return alert('주문할 상품을 선택하세요.');
-    }
-
-    navigate('/order/', {
-      state: {
-        orderItems: cartData,
-        orderCheckItems: cartCheckItems,
-        cartItemTotalPrice: cartItemTotalPrice,
-        cartItemFee: cartItemFee,
-        orderType: 'cart_order',
-      },
-    });
-  };
-
-  const onClickCartDelete = (productId: number) => {
-    const arr = cartData.filter(
-      (item: { product_id: number }) => item.product_id === productId
-    );
-    mutate(arr[0].cart_item_id, {
-      onSuccess: (res) => {
-        console.log(res);
-        console.log(cartData);
-      },
-    });
-  };
 
   const cartTotalInfo = (
     totalPrice: number,
@@ -133,8 +106,35 @@ export default function CartForm() {
     }
   };
 
+  const onClickOrder = () => {
+    if (cartCheckItems.length === 0) {
+      return alert('주문할 상품을 선택하세요.');
+    }
+
+    navigate('/order/', {
+      state: {
+        orderItems: cartData,
+        orderCheckItems: cartCheckItems,
+        cartItemTotalPrice: cartItemTotalPrice,
+        cartItemFee: cartItemFee,
+        orderType: 'cart_order',
+      },
+    });
+  };
+
+  const onClickCartDelete = (productId: number) => {
+    const arr = cartData.filter(
+      (item: { product_id: number }) => item.product_id === productId
+    );
+    deleteCart(arr[0].cart_item_id);
+  };
+
   return (
     <Layout title="장바구니">
+      {isLoading && <Spinner />}
+      {isSuccess && (
+        <Alerts severity={'error'} message={'삭제를 완료 하였습니다.'} />
+      )}
       {cartData && (
         <CartList
           cartData={cartData}

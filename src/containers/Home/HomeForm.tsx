@@ -5,9 +5,11 @@ import Layout from '../../components/common/Layout';
 import Banner from '../../components/banner';
 import Carousel from '../../components/carousel';
 import { Typography } from '@mui/material';
+import Spinner from '../../components/spinner';
 
 export default function HomeForm() {
-  const { products, productsStatic, maxPage, setCurrentPage } = useProduct();
+  const { products, productsStatic, maxPage, setCurrentPage, isLoading } =
+    useProduct();
   return (
     <>
       <Banner />
@@ -16,6 +18,7 @@ export default function HomeForm() {
       </Typography>
       {productsStatic && <Carousel products={productsStatic} />}
       <Layout title={''} size={10}>
+        {isLoading && <Spinner />}
         {products && <ProductList products={products} />}
         <Pagination
           count={maxPage}
