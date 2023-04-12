@@ -16,7 +16,7 @@ export default function Banner() {
         <img
           src={banner1}
           width={'100%'}
-          height={400}
+          height={350}
           style={{ backgroundSize: 'contain' }}
         />
       </Paper>
@@ -24,7 +24,7 @@ export default function Banner() {
         <img
           src={banner2}
           width={'100%'}
-          height={400}
+          height={350}
           style={{ backgroundSize: 'contain' }}
         />
       </Paper>
@@ -32,7 +32,7 @@ export default function Banner() {
         <img
           src={banner3}
           width={'100%'}
-          height={400}
+          height={350}
           style={{ backgroundSize: 'contain' }}
         />
       </Paper>
