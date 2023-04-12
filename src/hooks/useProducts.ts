@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQueries, useQuery, useQueryClient } from '@tanstack/react-query';
 import { instance } from '../util/instance';
-import { getAllProduct } from '../services/apis';
 
 export interface IProduct {
   image: string;
@@ -15,10 +14,6 @@ export interface IProduct {
   shipping_method: string;
   stock: number;
 }
-
-export const useAllProduct = () => {
-  return useQuery(['allProducts'], () => getAllProduct());
-};
 
 export const useProduct = () => {
   const queryClient = useQueryClient();
@@ -50,7 +45,7 @@ export const useProduct = () => {
     getProductsStatic()
   );
 
-  const { data: products = fallBack } = useQuery(
+  const { data: products = fallBack, isLoading } = useQuery(
     ['products', currentPage],
     () => getProducts(currentPage),
     {
@@ -58,5 +53,49 @@ export const useProduct = () => {
     }
   );
 
-  return { products, productsStatic, maxPage, currentPage, setCurrentPage };
+  return {
+    products,
+    productsStatic,
+    maxPage,
+    currentPage,
+    setCurrentPage,
+    isLoading,
+  };
 };
+
+// export const useProductStatic = () => {
+//   const [currentPage, setCurrentPage] = useState(1);
+//   const [maxPage, setMaxPage] = useState(0);
+//   const [allData, setAllData] = useState<any>([]);
+
+//   const getProductsStatic = async () => {
+//     const { data } = await instance.get(`products/`);
+//     setMaxPage(Math.ceil(data.count / 15));
+//     return data;
+//   };
+//   const { data: productsStatic } = useQuery(['productsStaticData'], () =>
+//     getProductsStatic()
+//   );
+
+//   // const getProductsStaticData = async (idx: number) => {
+//   //   const { data } = await instance.get(`products/${idx}`);
+//   //   setMaxPage(Math.ceil(data.count / 15));
+//   //   return data;
+//   // };
+
+//   // const arr = new Array(maxPage);
+
+//   // console.log(productsStatic.count / 15);
+
+//   // const queries = useQueries(
+//   //   arr.map((_, idx): any => {
+//   //     return {
+//   //       queryKey: ['user', idx],
+//   //       queryFn: () => getProductsStaticData()),
+//   //     };
+//   //   })
+//   //   )
+//   // }
+
+//   return { productsStatic };
+// };
