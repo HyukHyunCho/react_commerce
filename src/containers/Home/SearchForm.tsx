@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import Layout from '../../components/common/Layout';
 import Typography from '@mui/material/Typography';
 import useDebounce from '../../hooks/useDebounce';
