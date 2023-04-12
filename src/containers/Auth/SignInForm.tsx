@@ -54,6 +54,7 @@ export default function SignInForm() {
           defaultValue={''}
           render={({ field: { onChange, value }, fieldState: { error } }) => (
             <TextField
+              type="password"
               label="비밀번호"
               variant="outlined"
               fullWidth
