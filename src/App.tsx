@@ -2,7 +2,6 @@ import { Routes, Route, Outlet } from 'react-router';
 import Home from './pages/Home';
 import ProductDetail from './pages/ProductDetail';
 import Header from './containers/common/Header';
-import Footer from './containers/common/Footer';
 import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
 import Cart from './pages/Cart';
@@ -18,7 +17,6 @@ const Layout = () => {
     <>
       <Header />
       <Outlet />
-      <Footer />
     </>
   );
 };
