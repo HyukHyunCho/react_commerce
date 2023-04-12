@@ -14,29 +14,7 @@ export default function OrderInfo({
   return (
     <>
       <Grid container spacing={3}>
-        <Grid item xs={12} mt={3}>
-          <Typography variant="h6">주문자 정보</Typography>
-        </Grid>
-        <Grid item xs={12} sm={4}>
-          <TextField
-            name="user_name"
-            label="이름"
-            fullWidth
-            variant="standard"
-          />
-        </Grid>
-        <Grid item xs={12} sm={4}>
-          <TextField
-            name="phone_number"
-            label="휴대폰"
-            fullWidth
-            variant="standard"
-          />
-        </Grid>
-        <Grid item xs={12} sm={4}>
-          <TextField name="email" label="이메일" fullWidth variant="standard" />
-        </Grid>
-        <Grid item xs={12}>
+        <Grid item xs={12} mt={5}>
           <Typography variant="h6">배송지 정보</Typography>
         </Grid>
         <Grid item xs={12} sm={7}>
