@@ -17,6 +17,7 @@ import { useNavigate } from 'react-router';
 import { getUserType } from '../../util/cookie';
 import { removeCookie } from '../../util/cookie';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import logo from '../../assets/image/logo.jpg';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -107,8 +108,11 @@ function Header() {
     <AppBar position="static" color="transparent">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
-          <Typography
+          <Box mr={5}>
+            <img src={logo} />
+          </Box>
+          {/* <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} /> */}
+          {/* <Typography
             variant="h6"
             noWrap
             component="a"
@@ -123,7 +127,7 @@ function Header() {
             }}
           >
             MARKET
-          </Typography>
+          </Typography> */}
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
               size="large"
@@ -174,7 +178,12 @@ function Header() {
               )}
             </Menu>
           </Box>
-          <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+          {/* 
+          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+            <img src={logo} />
+          </Box>
+
+          <img src={logo} style={{ marginRight: 30 }} />
           <Typography
             variant="h5"
             noWrap
@@ -192,7 +201,7 @@ function Header() {
             }}
           >
             LOGO
-          </Typography>
+          </Typography> */}
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             <MenuItem onClick={(e) => handleCloseNavMenu(e)}>
               <Typography textAlign="center">홈</Typography>
@@ -250,11 +259,9 @@ function Header() {
                   open={Boolean(anchorElUser)}
                   onClose={handleCloseUserMenu}
                 >
-                  {/* {settings.map((setting) => ( */}
                   <MenuItem onClick={handleLogout}>
                     <Typography textAlign="center">로그아웃</Typography>
                   </MenuItem>
-                  {/* ))} */}
                 </Menu>
               </>
             ) : (
