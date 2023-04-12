@@ -61,15 +61,18 @@ export default function ProductItem({ product }: IitemObj) {
             </Typography>
             <Typography
               variant="body2"
-              sx={{ color: '#FF4800', fontWeight: 600 }}
+              sx={{ color: '#FF4800', fontWeight: 700 }}
             >
               {product.price.toLocaleString('ko-KR')}원
             </Typography>
             {product.shipping_fee === 0 && (
               <Chip label="무료배송" size="small" />
             )}
+            {product.stock < 6 && product.stock > 0 && (
+              <Chip label="품절임박" size="small" color="warning" />
+            )}
             {product.stock === 0 && (
-              <Chip label="재고소진" size="small" color="error" />
+              <Chip label="일시품절" size="small" color="error" />
             )}
           </Grid>
         </Grid>
