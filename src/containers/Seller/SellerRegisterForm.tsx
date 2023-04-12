@@ -1,4 +1,4 @@
-import React, { useState, useEffect, SyntheticEvent } from 'react';
+import { useState, useEffect, SyntheticEvent } from 'react';
 
 import { useForm, Controller, FieldValues } from 'react-hook-form';
 import Layout from '../../components/common/Layout';
@@ -7,6 +7,7 @@ import Button from '@mui/material/Button';
 import { useLocation, useNavigate, useParams } from 'react-router';
 import { useProductDetail } from '../../hooks/useProductDetail';
 import { useAddProduct, useUpdateProduct } from '../../hooks/useSeller';
+import Alerts from '../../components/alert';
 
 export default function SellerRegisterForm() {
   const navigate = useNavigate();
@@ -15,8 +16,9 @@ export default function SellerRegisterForm() {
   const { type } = location.state;
   const { handleSubmit, control, setValue } = useForm();
   const { data } = useProductDetail(Number(id));
-  const { mutate: addProduct } = useAddProduct();
-  const { mutate: updateProduct } = useUpdateProduct();
+  const { mutate: addProduct, isSuccess: addSuccess } = useAddProduct();
+  const { mutate: updateProduct, isSuccess: updateSuccess } =
+    useUpdateProduct();
   const [previewImg, setPreviewImg] = useState('');
 
   useEffect(() => {
@@ -59,10 +61,10 @@ export default function SellerRegisterForm() {
   };
 
   return (
-    <Layout title="게시물 작성" size={400}>
+    <Layout title="게시물 작성" size={4}>
       <form onSubmit={handleSubmit(onSubmit)}>
         {previewImg && (
-          <img src={previewImg} width={400} height={200} alt={previewImg} />
+          <img src={previewImg} width={'100%'} height={200} alt={previewImg} />
         )}
         <Controller
           name="image"
