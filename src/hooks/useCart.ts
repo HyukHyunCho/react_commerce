@@ -19,7 +19,7 @@ interface IFormCart {
 }
 
 export const useCart = () => {
-  const { data } = useQuery(['cartData'], () => getCart());
+  const { data, isLoading } = useQuery(['cartData'], () => getCart());
 
   const cartQueries = useQueries({
     queries:
@@ -36,6 +36,7 @@ export const useCart = () => {
   return {
     data,
     cartQueries,
+    isLoading,
   };
 };
 
