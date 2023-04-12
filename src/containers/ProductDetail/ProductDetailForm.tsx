@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import ProductDetail from '../../components/product/productDetail';
 import { useProductDetail } from '../../hooks/useProductDetail';
@@ -6,6 +6,8 @@ import { useAddCart } from '../../hooks/useCart';
 import { getUserType } from '../../util/cookie';
 import Modal from '../../components/modal';
 import { useShoppingCartCheck } from '../../hooks/useCartCheck';
+import { useModal } from '../../hooks/useModal';
+import Spinner from '../../components/spinner';
 
 interface ICartItem {
   cart_item_id: number;
@@ -19,17 +21,23 @@ export default function ProductDetailForm() {
   const navigate = useNavigate();
   const { id } = useParams();
   const [userType] = useState(getUserType());
-  const [open, setOpen] = useState<boolean>(false);
-  const [modalTitle, setModalTitle] = useState('');
-  const [modalSubTitle, setModalSubTitle] = useState('');
   const [count, setCount] = useState(1);
-  const { data: productDetailData } = useProductDetail(Number(id));
+  const [successCart, setSuccessCart] = useState(true);
+  const { data: productDetailData, isLoading } = useProductDetail(Number(id));
   const { data: cartCheckData } = useShoppingCartCheck();
+
   const { mutate: addCart } = useAddCart();
-  console.log(productDetailData);
-  const handleClose = () => {
-    setOpen(false);
-  };
+  const {
+    open,
+    modalTitle,
+    modalSubTitle,
+    modalType,
+    handleOpen,
+    handleClose,
+    setModalType,
+    setModalTitle,
+    setModalSubTitle,
+  } = useModal();
 
   const onCountClick = (value: string) => {
     if (value === 'plus') {
@@ -41,20 +49,39 @@ export default function ProductDetailForm() {
     }
   };
 
-  const stockCheck = () => {
-    if (productDetailData.stock === 0) {
-      return false;
-    }
+  const modalCheck = (type: string, title: string, subTitle: string) => {
+    setModalType(type);
+    setModalTitle(title);
+    setModalSubTitle(subTitle);
+    handleOpen();
   };
 
-  const cartCheck = () => {
+  const cartCheck = (type: string) => {
     if (!userType) {
-      alert('로그인이 필요한 서비스입니다.');
-      return false;
+      modalCheck(
+        '/signin',
+        '로그인이 필요한 서비스 입니다.',
+        '로그인 페이지로 이동하시겠습니까?'
+      );
+      return;
     }
+
+    if (productDetailData.stock === 0) {
+      modalCheck('', '해당 상품은 품절 되었습니다.', '');
+      return;
+    }
+
     if (userType === 'SELLER') {
-      alert('판매자는 구매할 수 없습니다.');
-      return false;
+      modalCheck('', '판매자는 구매 불가능합니다.', '');
+      return;
+    }
+
+    if (!successCart) {
+      return modalCheck(
+        '/cart',
+        '장바구니에 있는 상품입니다.',
+        '장바구니 페이지로 이동하시겠습니까?'
+      );
     }
 
     const shoppingCartData = cartCheckData.find(
@@ -63,21 +90,36 @@ export default function ProductDetailForm() {
     const shoppingCartCheck = shoppingCartData === undefined ? true : false;
 
     if (shoppingCartCheck === false) {
-      setModalTitle('장바구니에 있는 제품입니다.');
-      setModalSubTitle('장바구니로 이동하시겠습니까?');
-      setOpen(true);
-      return false;
+      modalCheck(
+        '/cart',
+        '장바구니에 있는 상품입니다.',
+        '장바구니 페이지로 이동하시겠습니까?'
+      );
+      return;
     }
-    return true;
+
+    type === 'cart' ? onClickAddCart() : onClickOrder();
+  };
+
+  const onClickAddCart = () => {
+    const req = {
+      product_id: productDetailData.product_id,
+      quantity: count,
+      check: true,
+    };
+    addCart(req, {
+      onSuccess: (res) => {
+        setSuccessCart(false);
+        modalCheck(
+          '/cart',
+          '상품이 장바구니에 추가 되었습니다.',
+          '장바구니로 이동하시겠습니까?'
+        );
+      },
+    });
   };
 
   const onClickOrder = () => {
-    const checkStock = stockCheck();
-    const checkCart = cartCheck();
-
-    if (!checkStock) return alert('품절된 제품 입니다.');
-    if (!checkCart) return;
-
     navigate('/order/', {
       state: {
         orderItems: [
@@ -91,38 +133,18 @@ export default function ProductDetailForm() {
     });
   };
 
-  const onClickAddCart = () => {
-    const checkStock = stockCheck();
-    const checkCart = cartCheck();
-    if (!checkStock) return alert('품절된 제품 입니다.');
-    if (!checkCart) return;
-
-    const req = {
-      product_id: productDetailData.product_id,
-      quantity: count,
-      check: true,
-    };
-    addCart(req, {
-      onSuccess: (res) => {
-        setModalTitle('상품이 장바구니에 추가 되었습니다.');
-        setModalSubTitle('장바구니로 이동하시겠습니까?');
-        setOpen(true);
-      },
-    });
-  };
-
   const onClickPage = () => {
-    navigate('/cart');
+    navigate(modalType);
   };
 
   return (
     <>
+      {isLoading && <Spinner />}
       <ProductDetail
         productDetailData={productDetailData}
         count={count}
         onCountClick={onCountClick}
-        onClickOrder={onClickOrder}
-        onClickAddCart={onClickAddCart}
+        cartCheck={cartCheck}
       />
       {open && (
         <Modal
@@ -131,6 +153,7 @@ export default function ProductDetailForm() {
           handleClick={onClickPage}
           title={modalTitle}
           subTitle={modalSubTitle}
+          modalType={modalType}
         />
       )}
     </>
