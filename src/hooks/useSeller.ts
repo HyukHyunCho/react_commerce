@@ -4,7 +4,6 @@ import {
   useQueryClient,
 } from '@tanstack/react-query';
 import { FieldValues } from 'react-hook-form';
-
 import { addProduct, deleteProduct, updateProduct } from '../services/apis';
 import { authInstance } from '../util/instance';
 import { getToken } from '../util/cookie';
@@ -25,7 +24,7 @@ export const useSellerProduct = () => {
     ['sellerProduct'],
     ({ pageParam = BASE_URL + '/seller/' }) => getSellerProduct(pageParam),
     {
-      getNextPageParam: (lastPage) => lastPage.next || undefined,
+      getNextPageParam: (page) => page.next || undefined,
     }
   );
 
@@ -49,7 +48,7 @@ export const useDeleteProduct = () => {
   const queryClient = useQueryClient();
   return useMutation((id: number) => deleteProduct(id), {
     onSuccess: () => {
-      queryClient.invalidateQueries(['sellerData']);
+      queryClient.invalidateQueries(['sellerProduct']);
     },
   });
 };
