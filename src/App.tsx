@@ -10,7 +10,7 @@ import Order from './pages/Order';
 import Search from './pages/Search';
 import Seller from './pages/Seller';
 import SellerRegister from './pages/SellerRegister';
-import Payment from './pages/Payment';
+// import Payment from './pages/Payment';
 import PrivateRoute from './lib/PrivateRoute';
 
 const Layout = () => {
@@ -50,10 +50,10 @@ function App() {
             <PrivateRoute restricted={true} component={<SellerRegister />} />
           }
         />
-        <Route
+        {/* <Route
           path="payment"
           element={<PrivateRoute restricted={true} component={<Payment />} />}
-        />
+        /> */}
       </Route>
     </Routes>
   );
