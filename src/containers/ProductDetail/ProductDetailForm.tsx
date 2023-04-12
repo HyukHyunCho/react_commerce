@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router';
+import { useLocation, useNavigate, useParams } from 'react-router';
 import ProductDetail from '../../components/product/productDetail';
 import { useProductDetail } from '../../hooks/useProductDetail';
 import { useAddCart } from '../../hooks/useCart';
@@ -20,6 +20,7 @@ interface ICartItem {
 export default function ProductDetailForm() {
   const navigate = useNavigate();
   const { id } = useParams();
+  const { state } = useLocation();
   const [userType] = useState(getUserType());
   const [count, setCount] = useState(1);
   const [successCart, setSuccessCart] = useState(true);
@@ -141,7 +142,7 @@ export default function ProductDetailForm() {
     <>
       {isLoading && <Spinner />}
       <ProductDetail
-        productDetailData={productDetailData}
+        productDetailData={state}
         count={count}
         onCountClick={onCountClick}
         cartCheck={cartCheck}

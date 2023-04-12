@@ -28,6 +28,9 @@ interface Iitem {
   price: string;
   product_name: string;
   product_info: string;
+  store_name: string;
+  shipping_fee: string;
+  stock: number;
 }
 
 interface ICarouselProps {
@@ -48,7 +51,20 @@ export default function Carousel({ products }: ICarouselProps) {
           <Grid
             key={item.product_id}
             sx={{ cursor: 'pointer' }}
-            onClick={() => navigate(`/product/${item.product_id}`)}
+            onClick={() =>
+              navigate(`/product/${item.product_id}`, {
+                state: {
+                  product_id: item.product_id,
+                  image: item.image,
+                  price: item.price,
+                  product_name: item.product_name,
+                  product_info: item.product_info,
+                  store_name: item.store_name,
+                  shipping_fee: item.shipping_fee,
+                  stock: item.stock,
+                },
+              })
+            }
           >
             <img
               src={item.image}

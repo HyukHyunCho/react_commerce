@@ -35,7 +35,20 @@ export default function ProductItem({ product }: IitemObj) {
               transition: 'transform 250ms ease-in',
             },
           }}
-          onClick={() => navigate(`/product/${product.product_id}`)}
+          onClick={() =>
+            navigate(`/product/${product.product_id}`, {
+              state: {
+                product_id: product.product_id,
+                image: product.image,
+                price: product.price,
+                product_name: product.product_name,
+                product_info: product.product_info,
+                store_name: product.store_name,
+                shipping_fee: product.shipping_fee,
+                stock: product.stock,
+              },
+            })
+          }
         >
           <Grid>
             <img
