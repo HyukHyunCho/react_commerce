@@ -17,7 +17,7 @@ export default function Banner() {
           src={banner1}
           width={'100%'}
           height={350}
-          style={{ backgroundSize: 'contain' }}
+          style={{ objectFit: 'cover' }}
         />
       </Paper>
       <Paper>
@@ -25,7 +25,7 @@ export default function Banner() {
           src={banner2}
           width={'100%'}
           height={350}
-          style={{ backgroundSize: 'contain' }}
+          style={{ objectFit: 'cover' }}
         />
       </Paper>
       <Paper>
@@ -33,7 +33,7 @@ export default function Banner() {
           src={banner3}
           width={'100%'}
           height={350}
-          style={{ backgroundSize: 'contain' }}
+          style={{ objectFit: 'cover' }}
         />
       </Paper>
     </Carousel>
