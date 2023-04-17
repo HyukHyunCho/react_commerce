@@ -17,6 +17,7 @@ export default function Banner() {
           src={banner1}
           width={'100%'}
           height={350}
+          alt={'image'}
           style={{ objectFit: 'cover' }}
         />
       </Paper>
@@ -25,6 +26,7 @@ export default function Banner() {
           src={banner2}
           width={'100%'}
           height={350}
+          alt={'image'}
           style={{ objectFit: 'cover' }}
         />
       </Paper>
@@ -33,6 +35,7 @@ export default function Banner() {
           src={banner3}
           width={'100%'}
           height={350}
+          alt={'image'}
           style={{ objectFit: 'cover' }}
         />
       </Paper>
