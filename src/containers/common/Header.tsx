@@ -109,7 +109,7 @@ function Header() {
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Box mr={5}>
-            <img src={logo} alt="img" />
+            <img src={logo} alt="img" width={113} height={23} />
           </Box>
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
