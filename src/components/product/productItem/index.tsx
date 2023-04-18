@@ -62,6 +62,7 @@ export default function ProductItem({ product }: IitemObj) {
               style={{
                 borderRadius: '10px',
                 boxShadow: '0 5px 10px -7px rgba(0, 0, 0, 1)',
+                objectFit: 'cover',
               }}
             />
             <Typography variant="body2" sx={{ color: '#747474' }}>
