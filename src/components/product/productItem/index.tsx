@@ -2,6 +2,8 @@ import { useNavigate } from 'react-router';
 import { Typography } from '@mui/material';
 import Grid from '@mui/material/Unstable_Grid2';
 import Chip from '@mui/material/Chip';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/blur.css';
 
 interface item {
   product_id: number;
@@ -51,7 +53,8 @@ export default function ProductItem({ product }: IitemObj) {
           }
         >
           <Grid>
-            <img
+            <LazyLoadImage
+              effect="blur"
               src={product.image}
               alt={product.product_name}
               width={340}

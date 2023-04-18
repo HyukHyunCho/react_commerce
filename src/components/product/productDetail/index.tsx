@@ -63,7 +63,6 @@ export default function ProductDetail({
                   {productDetailData.price.toLocaleString('ko-KR')}원
                 </Typography>
               </Grid>
-
               <Grid xs={12} sx={{ mt: 3, borderTop: '1px solid #D5D5D5' }}>
                 <Typography variant="h6" sx={{ mt: 1 }}>
                   배송정보

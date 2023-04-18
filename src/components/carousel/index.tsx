@@ -3,6 +3,8 @@ import 'react-multi-carousel/lib/styles.css';
 import Grid from '@mui/material/Unstable_Grid2';
 import { Typography } from '@mui/material';
 import { useNavigate } from 'react-router';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/blur.css';
 
 const responsive = {
   desktop: {
@@ -66,7 +68,8 @@ export default function Carousel({ products }: ICarouselProps) {
               })
             }
           >
-            <img
+            <LazyLoadImage
+              effect="blur"
               src={item.image}
               alt={item.image}
               width={'98%'}
