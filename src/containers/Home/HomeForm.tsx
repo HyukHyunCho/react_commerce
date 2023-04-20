@@ -20,10 +20,10 @@ export default function HomeForm() {
       </Typography>
       {productsStatic && <Carousel products={productsStatic} />}
       <Layout title={''} size={10}>
-        {/* {isLoading && <Spinner />}
-        <Skeleton /> */}
+        {isLoading && <Spinner />}
+        {/* <Skeleton /> */}
 
-        {isLoading && <Skeleton />}
+        {/* {isLoading && <Skeleton />} */}
 
         {products && <ProductList products={products} />}
         <Pagination
