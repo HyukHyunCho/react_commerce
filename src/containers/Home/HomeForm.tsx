@@ -23,7 +23,7 @@ export default function HomeForm() {
         {isLoading && <Spinner />}
         {/* <Skeleton /> */}
 
-        {/* {isLoading && <Skeleton />} */}
+        {isLoading && <Skeleton />}
 
         {products && <ProductList products={products} />}
         <Pagination
