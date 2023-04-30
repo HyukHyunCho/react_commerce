@@ -22,9 +22,7 @@ export default function HomeForm() {
       <Layout title={''} size={10}>
         {isLoading && <Spinner />}
         {/* <Skeleton /> */}
-
         {isLoading && <Skeleton />}
-
         {products && <ProductList products={products} />}
         <Pagination
           count={maxPage}
