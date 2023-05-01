@@ -1,6 +1,6 @@
 import BasicCarousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
-import Grid from '@mui/material/Unstable_Grid2';
+import { Box, Grid } from '@mui/material';
 import { Typography } from '@mui/material';
 import { useNavigate } from 'react-router';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
@@ -68,17 +68,19 @@ export default function Carousel({ products }: ICarouselProps) {
               })
             }
           >
-            <LazyLoadImage
-              effect="blur"
-              src={item.image}
-              alt={item.image}
-              width={'98%'}
-              height={200}
-              style={{
-                borderRadius: '5px',
-                boxShadow: '0 5px 10px -7px rgba(0, 0, 0, 1)',
-              }}
-            />
+            <Box sx={{ backgroundColor: '#EAEAEA' }}>
+              <LazyLoadImage
+                effect="blur"
+                src={item.image}
+                alt={item.image}
+                width={'98%'}
+                height={200}
+                style={{
+                  borderRadius: '5px',
+                  boxShadow: '0 5px 10px -7px rgba(0, 0, 0, 1)',
+                }}
+              />
+            </Box>
             <Typography variant="body2" sx={{ textAlign: 'center' }}>
               {item.product_name}
             </Typography>

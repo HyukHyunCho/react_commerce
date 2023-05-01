@@ -7,8 +7,6 @@ import Carousel from '../../components/carousel';
 import { Typography } from '@mui/material';
 import Spinner from '../../components/spinner';
 
-import Skeleton from '../../components/skeleton';
-
 export default function HomeForm() {
   const { products, productsStatic, maxPage, setCurrentPage, isLoading } =
     useProduct();
@@ -21,8 +19,6 @@ export default function HomeForm() {
       {productsStatic && <Carousel products={productsStatic} />}
       <Layout title={''} size={10}>
         {isLoading && <Spinner />}
-        {/* <Skeleton /> */}
-        {isLoading && <Skeleton />}
         {products && <ProductList products={products} />}
         <Pagination
           count={maxPage}

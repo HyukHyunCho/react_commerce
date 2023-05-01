@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router';
-import { Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import Grid from '@mui/material/Unstable_Grid2';
 import Chip from '@mui/material/Chip';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
@@ -53,18 +53,18 @@ export default function ProductItem({ product }: IitemObj) {
           }
         >
           <Grid>
-            <LazyLoadImage
-              effect="blur"
-              src={product.image}
-              alt={product.product_name}
-              width={340}
-              height={340}
-              style={{
-                borderRadius: '10px',
-                boxShadow: '0 5px 10px -7px rgba(0, 0, 0, 1)',
-                objectFit: 'cover',
-              }}
-            />
+            <Box sx={{ backgroundColor: '#EAEAEA' }}>
+              <LazyLoadImage
+                effect="blur"
+                src={product.image}
+                alt={product.product_name}
+                width={330}
+                height={330}
+                style={{
+                  objectFit: 'cover',
+                }}
+              />
+            </Box>
             <Typography variant="body2" sx={{ color: '#747474' }}>
               {product.store_name}
             </Typography>
