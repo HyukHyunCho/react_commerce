@@ -12,7 +12,14 @@
 /build
 
 # src
-src/
+src/assets
+src/components
+src/constants
+src/containers
+src/hooks
+src/lib
+src/services
+src/util
 
 # misc
 .DS_Store
