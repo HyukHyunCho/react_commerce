@@ -5,14 +5,14 @@
 /.pnp
 .pnp.js
 
-
 # testing
 /coverage
 
 # production
 /build
-/src/assets
-/src/components
+
+# src
+src/
 
 # misc
 .DS_Store
